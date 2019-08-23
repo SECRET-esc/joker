@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "739892697480",
+    "firebase_url": "https://pokerdom-be242.firebaseio.com",
+    "project_id": "pokerdom-be242",
+    "storage_bucket": "pokerdom-be242.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739892697480:android:38691c333eaa28ba",
+        "android_client_info": {
+          "package_name": "com.pd.flower"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739892697480-bi7lcelbmikkb7s1ilivn7b7354rjoda.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgSpbmWkiXGPDwcz_g9Lgd0hnRnf57ruY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739892697480-bi7lcelbmikkb7s1ilivn7b7354rjoda.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
