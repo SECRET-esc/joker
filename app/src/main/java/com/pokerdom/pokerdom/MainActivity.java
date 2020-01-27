@@ -2,8 +2,11 @@ package com.pokerdom.pokerdom;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -40,6 +43,7 @@ public class MainActivity extends Activity {
     private ValueCallback<Uri[]> mUMA;
     private final static int FCR = 1;
     private String mCM = null;
+    DataReceiver receiver;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -99,6 +103,8 @@ public class MainActivity extends Activity {
             mWebView.loadUrl("https://android.g2slt.com");
 //            mWebView.loadUrl("https://develop.pokerteam.online/");
         }
+        receiver = new DataReceiver();
+        registerReceiver(receiver, new IntentFilter("PUSH_REGISTERED"));  //<----Register
 
         fullScreen();
         View decorView = getWindow().getDecorView();
@@ -201,6 +207,29 @@ public class MainActivity extends Activity {
 
         FirebaseMessaging.getInstance().subscribeToTopic("all");
 
+    }
+
+    class DataReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if(intent.getAction().equals("PUSH_REGISTERED"))
+            {
+                String pushToken = intent.getStringExtra("PUSH");
+                String javaScript ="javascript:pushToken='"+pushToken+"';";
+                mWebView.loadUrl(javaScript);
+                Log.d(TAG, "javascript:console.log('"+pushToken+"');alert('"+pushToken+"');");
+            }
+        }
+
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        unregisterReceiver(receiver);           //<-- Unregister to avoid memoryleak
     }
 
 

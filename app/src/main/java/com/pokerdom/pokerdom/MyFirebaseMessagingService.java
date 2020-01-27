@@ -48,6 +48,7 @@ import androidx.work.WorkManager;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
+    public static String pushToken = null;
 
     /**
      * Called when message is received.
@@ -147,7 +148,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param token The new token.
      */
     private void sendRegistrationToServer(String token) {
-        // TODO: Implement this method to send token to your app server.
+        pushToken = token;
+        sendDataToActivity();
+    }
+    private void sendDataToActivity()
+    {
+        Intent i = new Intent();
+        i.setAction("PUSH_REGISTERED");
+        i.putExtra( "PUSH", pushToken);
+        sendBroadcast(i);
+
     }
 
     /**
