@@ -23,11 +23,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Check if message contains a data payload.
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(TAG, "Message data payload: " + remoteMessage.data)
-            if ( /* Check if data needs to be processed by long running job */true) { // For long-running tasks (10 seconds or more) use WorkManager.
-                scheduleJob()
-            } else { // Handle message within 10 seconds
-                handleNow()
-            }
+            scheduleJob()
         }
         // Check if message contains a notification payload.
         if (remoteMessage.notification != null) {
@@ -45,11 +41,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val work = OneTimeWorkRequest.Builder(MyWorker::class.java)
                 .build()
         WorkManager.getInstance().beginWith(work).enqueue()
-    }
-
-
-    private fun handleNow() {
-        Log.d(TAG, "Short lived task is done.")
     }
 
     private fun sendRegistrationToServer(token: String) {
