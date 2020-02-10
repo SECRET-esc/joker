@@ -4,25 +4,22 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
-import android.webkit.JsResult;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
-import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -50,7 +47,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mWebView = (WebView) findViewById(R.id.activity_main_webview);
+        mWebView = (WebView) findViewById(R.id.webview);
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new MyWebViewClient());
