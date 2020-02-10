@@ -23,20 +23,18 @@ import android.webkit.WebViewClient;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static android.view.View.SYSTEM_UI_FLAG_IMMERSIVE;
-
 public class MainActivity extends Activity {
 
     private WebView mWebView;
     private static final String TAG = "MainActivity";
-    private ValueCallback<Uri> mUploadMessage;
-    private final static int FILECHOOSER_RESULTCODE = 1;
-    private ValueCallback<Uri> mUM = null;
+
     private ValueCallback<Uri[]> mUMA;
     private final static int FCR = 1;
     private String mCM = null;
@@ -47,7 +45,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mWebView = (WebView) findViewById(R.id.webview);
+        mWebView = findViewById(R.id.webview);
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new MyWebViewClient());
@@ -76,23 +74,16 @@ public class MainActivity extends Activity {
         settings.setPluginState(WebSettings.PluginState.ON_DEMAND);
 
         CookieManager cookieManager = CookieManager.getInstance();
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        { cookieManager.setAcceptThirdPartyCookies(mWebView,true); }
-        else { cookieManager.setAcceptCookie(true); }
-
-        if (Build.VERSION.SDK_INT >= 21) {
-            mWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            mWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        } else if (Build.VERSION.SDK_INT >= 16) {
-            mWebView.requestFocus();
-            mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.setAcceptThirdPartyCookies(mWebView, true);
+        } else {
+            cookieManager.setAcceptCookie(true);
         }
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            settings.setDatabasePath("/data/data/" + mWebView.getContext().getPackageName() + "/databases/");
-        }
+        mWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+
+
         if (savedInstanceState != null)
             mWebView.restoreState(savedInstanceState);
         else {
@@ -103,104 +94,13 @@ public class MainActivity extends Activity {
         receiver = new DataReceiver();
         registerReceiver(receiver, new IntentFilter("PUSH_REGISTERED"));  //<----Register
 
-        fullScreen();
-        View decorView = getWindow().getDecorView();
-        decorView.setOnSystemUiVisibilityChangeListener
-                (new View.OnSystemUiVisibilityChangeListener() {
-                    @Override
-                    public void onSystemUiVisibilityChange(int visibility) {
-                        // Note that system bars will only be "visible" if none of the
-                        // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
-                        if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
-                            // TODO: The system bars are visible. Make any desired
-                            // adjustments to your UI, such as showing the action bar or
-                            // other navigational controls.
 
-                        } else {
-                            // TODO: The system bars are NOT visible. Make any desired
-                            // adjustments to your UI, such as hiding the action bar or
-                            // other navigational controls.
-                            fullScreen();
-                        }
-                    }
-                });
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            // Create channel to show notifications.
-//            String channelId = getString(R.string.default_notification_channel_id);
-//            String channelName = getString(R.string.default_notification_channel_name);
-//            NotificationManager notificationManager =
-//                    getSystemService(NotificationManager.class);
-//            notificationManager.createNotificationChannel(new NotificationChannel(channelId,
-//                    channelName, NotificationManager.IMPORTANCE_LOW));
-//        }
-
-        // If a notification message is tapped, any data accompanying the notification
-        // message is available in the intent extras. In this sample the launcher
-        // intent is fired when the notification is tapped, so any accompanying data would
-        // be handled here. If you want a different intent fired, set the click_action
-        // field of the notification message to the desired intent. The launcher intent
-        // is used when no click_action is specified.
-        //
-        // Handle possible data accompanying notification message.
-        // [START handle_data_extras]
         if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
                 Object value = getIntent().getExtras().get(key);
                 Log.d(TAG, "Key: " + key + " Value: " + value);
             }
         }
-        // [END handle_data_extras]
-
-//        Button subscribeButton = findViewById(R.id.subscribeButton);
-//        subscribeButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "Subscribing to weather topic");
-//                // [START subscribe_topics]
-//                FirebaseMessaging.getInstance().subscribeToTopic("weather")
-//                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                String msg = getString(R.string.msg_subscribed);
-//                                if (!task.isSuccessful()) {
-//                                    msg = getString(R.string.msg_subscribe_failed);
-//                                }
-//                                Log.d(TAG, msg);
-//                                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                // [END subscribe_topics]
-//            }
-//        });
-//
-//        Button logTokenButton = findViewById(R.id.logTokenButton);
-//        logTokenButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Get token
-//                // [START retrieve_current_token]
-//                FirebaseInstanceId.getInstance().getInstanceId()
-//                        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
-//                                if (!task.isSuccessful()) {
-//                                    Log.w(TAG, "getInstanceId failed", task.getException());
-//                                    return;
-//                                }
-//
-//                                // Get new Instance ID token
-//                                String token = task.getResult().getToken();
-//
-//                                // Log and toast
-//                                String msg = getString(R.string.msg_token_fmt, token);
-//                                Log.d(TAG, msg);
-//                                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                // [END retrieve_current_token]
-//            }
-//        });
 
         FirebaseMessaging.getInstance().subscribeToTopic("all");
 
@@ -211,42 +111,27 @@ public class MainActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            if(intent.getAction().equals("PUSH_REGISTERED"))
-            {
+            if ("PUSH_REGISTERED".equals(intent.getAction())) {
                 String pushToken = intent.getStringExtra("PUSH");
-                String javaScript ="javascript:pushToken='"+pushToken+"';";
+                String javaScript = "javascript:pushToken='" + pushToken + "';";
                 mWebView.loadUrl(javaScript);
-                Log.d(TAG, "javascript:console.log('"+pushToken+"');alert('"+pushToken+"');");
+                Log.d(TAG, "javascript:console.log('" + pushToken + "');alert('" + pushToken + "');");
             }
         }
 
     }
 
     @Override
-    public void onStop()
-    {
+    public void onStop() {
         super.onStop();
         unregisterReceiver(receiver);           //<-- Unregister to avoid memoryleak
     }
 
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState)
-    {
+    protected void onRestoreInstanceState(@NotNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mWebView.restoreState(savedInstanceState);
-    }
-
-    private void fullScreen() {
-        int uiOptions = 0;
-        View decorView = getWindow().getDecorView();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN | SYSTEM_UI_FLAG_IMMERSIVE;
-            }
-        }
-        decorView.setSystemUiVisibility(uiOptions);
     }
 
     @Override
@@ -259,13 +144,7 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    public void onPostResume() {
-        super.onPostResume();
-        fullScreen();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NotNull Bundle outState) {
         mWebView.saveState(outState);
         super.onSaveInstanceState(outState);
     }
@@ -278,12 +157,13 @@ public class MainActivity extends Activity {
 
             return super.shouldInterceptRequest(view, url);
         }
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             String host = Uri.parse(url).getHost();
             Uri.parse(url);
             Log.w(TAG, "shouldOverrideUrlLoading " + url + Uri.parse(url).toString());
-            if (host.contains("pokerdom")) {
+            if (host != null && host.contains("pokerdom")) {
                 // This is my website, so do not override; let my WebView load the page
                 return false;
             }
@@ -302,29 +182,6 @@ public class MainActivity extends Activity {
     }
 
     private class MyWebChromeClient extends WebChromeClient {
-        // For Android 3.0+
-        public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
-            Log.i("WebChromeClient", "openFileChooser()1     called.");
-            mUploadMessage = uploadMsg;
-            Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-            i.addCategory(Intent.CATEGORY_OPENABLE);
-            i.setType("image/*");
-            MainActivity.this.startActivityForResult(Intent.createChooser(i, "Image Browser"), MainActivity.FILECHOOSER_RESULTCODE);
-        }
-
-        // For Android < 3.0
-        public void openFileChooser(ValueCallback<Uri> uploadMsg) {
-            Log.i("WebChromeClient", "openFileChooser()2 called.");
-            openFileChooser(uploadMsg, "");
-        }
-
-
-        // For Android > 4.1
-        public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
-            Log.i("WebChromeClient", "openFileChooser()3 called.");
-            openFileChooser(uploadMsg, "");
-        }
-
         //For Android 5.0+
         public boolean onShowFileChooser(
                 WebView webView, ValueCallback<Uri[]> filePathCallback,
@@ -372,6 +229,7 @@ public class MainActivity extends Activity {
     }
 
     private File createImageFile() throws IOException {
+        @SuppressLint("SimpleDateFormat")
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/don_test/");
@@ -392,42 +250,35 @@ public class MainActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        if (Build.VERSION.SDK_INT >= 21) {
-            Uri[] results = null;
-            //Check if response is positive
-            if (resultCode == Activity.RESULT_OK) {
-                if (requestCode == FCR) {
-                    if (mUMA == null) {
-                        return;
+
+        Uri[] results = null;
+        //Check if response is positive
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == FCR) {
+                if (mUMA == null) {
+                    return;
+                }
+                if (intent == null) {
+                    //Capture Photo if no image available
+                    if (mCM != null) {
+                        results = new Uri[]{Uri.parse(mCM)};
+                        mCM = null;
                     }
-                    if (intent == null) {
-                        //Capture Photo if no image available
-                        if (mCM != null) {
-                            results = new Uri[]{Uri.parse(mCM)};
-                            mCM = null;
-                        }
-                    } else {
-                        String dataString = intent.getDataString();
-                        if (dataString != null) {
-                            results = new Uri[]{Uri.parse(dataString)};
-                        }
+                } else {
+                    String dataString = intent.getDataString();
+                    if (dataString != null) {
+                        results = new Uri[]{Uri.parse(dataString)};
                     }
                 }
-            }//WebChromeClient.FileChooserParams.parseResult(resultCode, data)
-            if (results != null) {
-                mUMA.onReceiveValue(results);
-                mUMA = null;
-            }else{
-                mUMA.onReceiveValue(new Uri[]{});
-                mUMA = null;
             }
+        }//WebChromeClient.FileChooserParams.parseResult(resultCode, data)
+        if (results != null) {
+            mUMA.onReceiveValue(results);
+            mUMA = null;
         } else {
-            if (requestCode == FCR) {
-                if (null == mUM) return;
-                Uri result = intent == null || resultCode != RESULT_OK ? null : intent.getData();
-                mUM.onReceiveValue(result);
-                mUM = null;
-            }
+            mUMA.onReceiveValue(new Uri[]{});
+            mUMA = null;
         }
+
     }
 }
