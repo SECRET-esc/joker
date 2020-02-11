@@ -2,10 +2,7 @@ package com.pokerdom.pokerdom
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -13,7 +10,6 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.webkit.*
-import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.IOException
