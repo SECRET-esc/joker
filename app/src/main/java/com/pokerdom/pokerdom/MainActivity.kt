@@ -24,7 +24,7 @@ class MainActivity : Activity() {
 
     private var mUMA: ValueCallback<Array<Uri>>? = null
     private var mCM: String? = null
-    private var receiver: DataReceiver = DataReceiver()
+//    private var receiver: DataReceiver = DataReceiver()
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,36 +61,37 @@ class MainActivity : Activity() {
         settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         if (savedInstanceState != null) {
             webView.restoreState(savedInstanceState)
-        } else { //            webView.loadUrl("http://194.67.78.242/4YRDMJ");
+        } else {
+            //            webView.loadUrl("http://194.67.78.242/4YRDMJ");
             webView.loadUrl("https://android.g2slt.com")
             //            webView.loadUrl("https://develop.pokerteam.online/");
         }
 //        receiver = DataReceiver()
-        registerReceiver(receiver, IntentFilter("PUSH_REGISTERED")) //<----Register
-        if (intent.extras != null) {
-            for (key in intent.extras!!.keySet()) {
-                val value = intent.extras!![key]
-                Log.d(TAG, "Key: $key Value: $value")
-            }
-        }
-        FirebaseMessaging.getInstance().subscribeToTopic("all")
+//        registerReceiver(receiver, IntentFilter("PUSH_REGISTERED")) //<----Register
+//        if (intent.extras != null) {
+//            for (key in intent.extras!!.keySet()) {
+//                val value = intent.extras!![key]
+//                Log.d(TAG, "Key: $key Value: $value")
+//            }
+//        }
+//        FirebaseMessaging.getInstance().subscribeToTopic("all")
     }
 
-    inner class DataReceiver : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            if ("PUSH_REGISTERED" == intent.action) {
-                val pushToken = intent.getStringExtra("PUSH")
-                val javaScript = "javascript:pushToken='$pushToken';"
+//    inner class DataReceiver : BroadcastReceiver() {
+//        override fun onReceive(context: Context, intent: Intent) {
+//            if ("PUSH_REGISTERED" == intent.action) {
+//                val pushToken = intent.getStringExtra("PUSH")
+//                val javaScript = "javascript:pushToken='$pushToken';"
 //                webView.loadUrl(javaScript)
-                Log.d(TAG, "javascript:console.log('$pushToken');alert('$pushToken');")
-            }
-        }
-    }
+//                Log.d(TAG, "javascript:console.log('$pushToken');alert('$pushToken');")
+//            }
+//        }
+//    }
 
-    public override fun onDestroy() {
-        super.onDestroy()
-        unregisterReceiver(receiver) //<-- Unregister to avoid memoryleak
-    }
+//    public override fun onDestroy() {
+//        super.onDestroy()
+//        unregisterReceiver(receiver) //<-- Unregister to avoid memoryleak
+//    }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
