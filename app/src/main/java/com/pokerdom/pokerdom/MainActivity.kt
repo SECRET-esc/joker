@@ -81,7 +81,7 @@ class MainActivity : Activity() {
             if ("PUSH_REGISTERED" == intent.action) {
                 val pushToken = intent.getStringExtra("PUSH")
                 val javaScript = "javascript:pushToken='$pushToken';"
-                webView.loadUrl(javaScript)
+//                webView.loadUrl(javaScript)
                 Log.d(TAG, "javascript:console.log('$pushToken');alert('$pushToken');")
             }
         }
