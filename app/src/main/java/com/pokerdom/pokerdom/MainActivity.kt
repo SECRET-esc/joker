@@ -108,9 +108,9 @@ class MainActivity : Activity() {
     }
 
     private inner class MyWebViewClient : WebViewClient() {
-        override fun shouldInterceptRequest(view: WebView, url: String): WebResourceResponse? {
-            Log.d(TAG, "shouldInterceptRequest: $url")
-            return super.shouldInterceptRequest(view, url)
+        override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {
+            Log.d(TAG, "shouldInterceptRequest: ${request?.url}")
+            return super.shouldInterceptRequest(view, request)
         }
 
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
