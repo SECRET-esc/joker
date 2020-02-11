@@ -65,7 +65,7 @@ class MainActivity : Activity() {
             webView.loadUrl("https://android.g2slt.com")
             //            webView.loadUrl("https://develop.pokerteam.online/");
         }
-        receiver = DataReceiver()
+//        receiver = DataReceiver()
         registerReceiver(receiver, IntentFilter("PUSH_REGISTERED")) //<----Register
         if (intent.extras != null) {
             for (key in intent.extras!!.keySet()) {
@@ -87,8 +87,8 @@ class MainActivity : Activity() {
         }
     }
 
-    public override fun onStop() {
-        super.onStop()
+    public override fun onDestroy() {
+        super.onDestroy()
         unregisterReceiver(receiver) //<-- Unregister to avoid memoryleak
     }
 
@@ -196,7 +196,7 @@ class MainActivity : Activity() {
         return image
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         var results: Array<Uri>? = null
         //Check if response is positive
