@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.pokerdom.pokerdom">
+    package="com.pd.pokerdom">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -20,7 +20,7 @@
         tools:targetApi="m">
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.pd.pokerdom.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
@@ -30,7 +30,7 @@
         </activity>
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name="com.pd.pokerdom.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

@@ -8,7 +8,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.pokerdom.pokerdom"
+        applicationId "com.pd.pokerdom"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
