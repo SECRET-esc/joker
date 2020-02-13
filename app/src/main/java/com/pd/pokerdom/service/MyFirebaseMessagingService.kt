@@ -1,4 +1,4 @@
-package com.pd.pokerdom
+package com.pd.pokerdom.service
 
 import android.content.Intent
 import android.util.Log
@@ -6,6 +6,7 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.pd.pokerdom.worker.MyWorker
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -35,14 +36,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendRegistrationToServer(token: String) {
-        pushToken = token
-        sendDataToActivity()
+        sendDataToActivity(token)
     }
 
-    private fun sendDataToActivity() {
+    private fun sendDataToActivity(token: String) {
         val i = Intent()
         i.action = "PUSH_REGISTERED"
-        i.putExtra("PUSH", pushToken)
+        i.putExtra("PUSH", token)
         sendBroadcast(i)
     }
 
@@ -81,6 +81,5 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     companion object {
         private const val TAG = "MyFirebaseMsgService"
-        var pushToken: String? = null
     }
 }

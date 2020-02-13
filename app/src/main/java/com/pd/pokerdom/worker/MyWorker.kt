@@ -1,4 +1,4 @@
-package com.pd.pokerdom
+package com.pd.pokerdom.worker
 
 import android.content.Context
 import android.util.Log

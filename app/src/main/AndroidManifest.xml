@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,7 +21,7 @@
         tools:targetApi="m">
 
         <activity
-            android:name="com.pd.pokerdom.MainActivity"
+            android:name="com.pd.pokerdom.ui.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
@@ -30,7 +31,7 @@
         </activity>
 
         <service
-            android:name="com.pd.pokerdom.MyFirebaseMessagingService"
+            android:name="com.pd.pokerdom.service.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
