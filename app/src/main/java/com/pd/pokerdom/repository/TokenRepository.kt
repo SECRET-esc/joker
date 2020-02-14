@@ -6,7 +6,6 @@ import com.pd.pokerdom.model.Token
 
 class TokenRepository(private val api: ApiService) {
 
-    private suspend fun sendToken(token: Token) = api.sendToken(token)
-
+    suspend fun sendToken(token: Token) = api.sendToken(token)
 
 }

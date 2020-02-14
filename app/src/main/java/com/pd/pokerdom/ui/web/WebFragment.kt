@@ -1,6 +1,5 @@
 package com.pd.pokerdom.ui.web
 
-
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
@@ -13,10 +12,8 @@ import android.view.View
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import com.pd.pokerdom.R
-import com.pd.pokerdom.js.JavaScriptInterface
 import kotlinx.android.synthetic.main.fragment_web.*
 import org.koin.android.viewmodel.ext.android.viewModel
-
 
 class WebFragment : Fragment(R.layout.fragment_web) {
 
@@ -75,7 +72,10 @@ class WebFragment : Fragment(R.layout.fragment_web) {
             } else true
         }
 
-        webView.addJavascriptInterface(JavaScriptInterface(/*this*/), "Android")
+        webView.addJavascriptInterface(
+            JavaScriptInterface(
+                viewModel
+            ), "Android")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

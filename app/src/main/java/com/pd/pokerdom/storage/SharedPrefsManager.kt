@@ -11,7 +11,7 @@ class SharedPrefsManager(context: Context) {
         get() = prefs.getValue(KEY_FIRST_RUN, true)
         set(value) = prefs.setValue(KEY_FIRST_RUN, value)
 
-    var tokenFCM: String?
+    var tokenFCM: String
         get() = prefs.getValue(KEY_TOKEN_FIREBASE, "")
         set(value) = prefs.setValue(KEY_TOKEN_FIREBASE, value)
 
