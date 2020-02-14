@@ -6,16 +6,21 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.pd.pokerdom.storage.SharedPrefsManager
 import com.pd.pokerdom.worker.MyWorker
 
-class MyFirebaseMessagingService : FirebaseMessagingService() {
+class MyFirebaseMessagingService(private val prefs: SharedPrefsManager) : FirebaseMessagingService() {
+
+    companion object {
+        private const val TAG = "MyFirebaseMsgService"
+    }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "From: " + remoteMessage.from)
         // Check if message contains a data payload.
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(TAG, "Message data payload: " + remoteMessage.data)
-            scheduleJob()
+//            scheduleJob()
         }
         // Check if message contains a notification payload.
         if (remoteMessage.notification != null) {
@@ -26,7 +31,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         Log.d(TAG, "Refreshed token: $token")
-        sendRegistrationToServer(token)
+        prefs.tokenFCM = token
+//        sendRegistrationToServer(token)
     }
 
     private fun scheduleJob() {
@@ -35,16 +41,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         WorkManager.getInstance(applicationContext).beginWith(work).enqueue()
     }
 
-    private fun sendRegistrationToServer(token: String) {
-        sendDataToActivity(token)
-    }
-
-    private fun sendDataToActivity(token: String) {
-        val i = Intent()
-        i.action = "PUSH_REGISTERED"
-        i.putExtra("PUSH", token)
-        sendBroadcast(i)
-    }
+//    private fun sendRegistrationToServer(token: String) {
+//        sendDataToActivity(token)
+//    }
+//
+//    private fun sendDataToActivity(token: String) {
+//        val i = Intent()
+//        i.action = "PUSH_REGISTERED"
+//        i.putExtra("PUSH", token)
+//        sendBroadcast(i)
+//    }
 
 //    @RequiresApi(api = Build.VERSION_CODES.O)
 //    private fun sendNotification(messageBody: String) {
@@ -78,8 +84,4 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 //        }
 //        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
 //    }
-
-    companion object {
-        private const val TAG = "MyFirebaseMsgService"
-    }
 }

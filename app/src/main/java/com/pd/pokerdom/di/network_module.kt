@@ -1,26 +1,24 @@
 package com.pd.pokerdom.di
 
-
 import com.pd.pokerdom.BuildConfig
 import com.pd.pokerdom.api.ApiService
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import okhttp3.logging.HttpLoggingInterceptor.*
-import org.koin.dsl.module
 
 val networkModule = module {
 
-    factory<Interceptor> {
+    single {
         HttpLoggingInterceptor()
             .setLevel(
                 if (BuildConfig.DEBUG) Level.BODY else Level.NONE
             )
     }
 
-    factory {
+    single {
         OkHttpClient.Builder()
                 .addInterceptor(get<HttpLoggingInterceptor>())
                 .build()

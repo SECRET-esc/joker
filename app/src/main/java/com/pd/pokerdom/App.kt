@@ -13,7 +13,6 @@ open class App : Application() {
         configureDi()
     }
 
-    // CONFIGURATION ---
     open fun configureDi() =
         startKoin {
             androidLogger()

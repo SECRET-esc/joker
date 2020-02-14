@@ -6,7 +6,7 @@ import retrofit2.http.POST
 
 interface ApiService {
 
-    @POST()
+    @POST("api/webhook/push/android")
     suspend fun sendToken(token: Token): String
 
 }
