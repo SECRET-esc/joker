@@ -7,13 +7,22 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('..\\keys\\key.jks')
+            keyPassword '123123'
+            keyAlias 'com.pd.pokerdom'
+            storePassword '123123'
+        }
+    }
+
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.pd.pokerdom"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -23,6 +32,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 

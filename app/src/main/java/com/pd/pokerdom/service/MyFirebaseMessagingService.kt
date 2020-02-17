@@ -9,11 +9,12 @@ import com.google.firebase.messaging.RemoteMessage
 import com.pd.pokerdom.storage.SharedPrefsManager
 import com.pd.pokerdom.worker.MyWorker
 
-class MyFirebaseMessagingService(private val prefs: SharedPrefsManager) : FirebaseMessagingService() {
+class MyFirebaseMessagingService() : FirebaseMessagingService() {
 
     companion object {
         private const val TAG = "MyFirebaseMsgService"
     }
+
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "From: " + remoteMessage.from)
@@ -31,6 +32,7 @@ class MyFirebaseMessagingService(private val prefs: SharedPrefsManager) : Fireba
 
     override fun onNewToken(token: String) {
         Log.d(TAG, "Refreshed token: $token")
+        val prefs = SharedPrefsManager(applicationContext)
         prefs.tokenFCM = token
 //        sendRegistrationToServer(token)
     }
