@@ -9,7 +9,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.FileProvider
 import com.pd.pokerdom.BuildConfig
 import com.pd.pokerdom.R
@@ -77,7 +76,7 @@ class DownloadController(private val context: Context, private val url: String) 
                 } else {
                     val install = Intent(Intent.ACTION_VIEW)
                     install.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    install.setDataAndType(uri, APP_INSTALL_PATH)
+                    install.setDataAndType(uri, MIME_TYPE)
                     context.startActivity(install)
                     context.unregisterReceiver(this)
                     // finish()

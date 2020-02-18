@@ -21,6 +21,7 @@ class WebFragment : Fragment(R.layout.fragment_web) {
         private const val TAG = "WebFragment"
         private const val REQUEST_FILE_CHOOSER = 100
     }
+
     private val viewModel: WebViewModel by viewModel()
     private var fileValueCallback: ValueCallback<Array<Uri>>? = null
 
@@ -30,9 +31,9 @@ class WebFragment : Fragment(R.layout.fragment_web) {
 
         if (savedInstanceState != null) {
             webView.restoreState(savedInstanceState)
-        }else {
+        } else {
 //        webView.loadUrl("http://194.67.78.242/4YRDMJ");
-        webView.loadUrl("https://android.g2slt.com")
+            webView.loadUrl("https://android.g2slt.com")
 //        webView.loadUrl("https://develop.pokerteam.online/");
         }
     }
@@ -45,7 +46,8 @@ class WebFragment : Fragment(R.layout.fragment_web) {
         webView.settings.databaseEnabled = true
         webView.settings.loadsImagesAutomatically = true
         webView.settings.loadWithOverviewMode = true
-        webView.settings.userAgentString = "Mozilla/5.0 (Linux; Android 7.0; Redmi Note 4 Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.111 Mobile Safari/537.36"
+        webView.settings.userAgentString =
+            "Mozilla/5.0 (Linux; Android 7.0; Redmi Note 4 Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.111 Mobile Safari/537.36"
         webView.settings.useWideViewPort = true
         webView.settings.javaScriptCanOpenWindowsAutomatically = true
         webView.settings.allowFileAccess = true
@@ -72,10 +74,7 @@ class WebFragment : Fragment(R.layout.fragment_web) {
             } else true
         }
 
-        webView.addJavascriptInterface(
-            JavaScriptInterface(
-                viewModel
-            ), "Android")
+        webView.addJavascriptInterface(JavaScriptInterface(viewModel), "Android")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -103,8 +102,10 @@ class WebFragment : Fragment(R.layout.fragment_web) {
 
     private inner class MyWebChromeClient : WebChromeClient() {
         //For Android 5.0+
-        override fun onShowFileChooser(webView: WebView?, filePathCallback: ValueCallback<Array<Uri>>?,
-                                       fileChooserParams: FileChooserParams?): Boolean {
+        override fun onShowFileChooser(
+            webView: WebView?, filePathCallback: ValueCallback<Array<Uri>>?,
+            fileChooserParams: FileChooserParams?
+        ): Boolean {
             Log.i("onShowFileChooser", "openFileChooser()3 called.")
             if (fileValueCallback != null) {
                 fileValueCallback!!.onReceiveValue(null)
@@ -115,7 +116,8 @@ class WebFragment : Fragment(R.layout.fragment_web) {
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             intent.type = "*/*"
 
-            startActivityForResult(intent,
+            startActivityForResult(
+                intent,
                 REQUEST_FILE_CHOOSER
             )
             return true
