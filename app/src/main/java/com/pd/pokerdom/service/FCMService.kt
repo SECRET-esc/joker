@@ -1,6 +1,5 @@
 package com.pd.pokerdom.service
 
-import android.content.Intent
 import android.util.Log
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
@@ -8,20 +7,27 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.pd.pokerdom.storage.SharedPrefsManager
 import com.pd.pokerdom.worker.MyWorker
+import org.koin.android.ext.android.inject
 
-class MyFirebaseMessagingService() : FirebaseMessagingService() {
+class FCMService : FirebaseMessagingService() {
 
     companion object {
-        private const val TAG = "MyFirebaseMsgService"
+        private const val TAG = "FCMService"
+        private const val KEY_CONFIG_DOMAIN = "config_domain"
     }
 
+    private val prefs: SharedPrefsManager by inject()
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "From: " + remoteMessage.from)
+
         // Check if message contains a data payload.
-        if (remoteMessage.data.isNotEmpty()) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.data)
-//            scheduleJob()
+        val dataMap = remoteMessage.data
+        if (dataMap.isNotEmpty()) {
+            Log.d(TAG, "Message data payload: $dataMap")
+            if (dataMap.containsKey(KEY_CONFIG_DOMAIN)){
+                prefs.configDomain = dataMap[KEY_CONFIG_DOMAIN].toString()
+            }
         }
         // Check if message contains a notification payload.
         if (remoteMessage.notification != null) {
@@ -31,8 +37,9 @@ class MyFirebaseMessagingService() : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
+        super.onNewToken(token)
         Log.d(TAG, "Refreshed token: $token")
-        val prefs = SharedPrefsManager(applicationContext)
+
         prefs.tokenFCM = token
 //        sendRegistrationToServer(token)
     }

@@ -27,7 +27,7 @@ object UpdateDialog : DialogFragment() {
         return AlertDialog.Builder(activity!!)
             .setTitle("Новая версия")
 //            .setView(R.layout.department_chooser_dialog)
-            .setMessage("Доступна новая версия. Желаете обновить приложение? \n $version")
+            .setMessage("Доступна новая версия ${version?.version} . Желаете обновить приложение?")
             .setPositiveButton(android.R.string.ok) { d, i ->
                 (activity as MainActivity).doPositiveClick()
             }

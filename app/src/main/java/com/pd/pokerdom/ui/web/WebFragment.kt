@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.pd.pokerdom.R
 import kotlinx.android.synthetic.main.fragment_web.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -29,13 +30,10 @@ class WebFragment : Fragment(R.layout.fragment_web) {
         super.onActivityCreated(savedInstanceState)
         setupWebView()
 
-        if (savedInstanceState != null) {
-            webView.restoreState(savedInstanceState)
-        } else {
-//        webView.loadUrl("http://194.67.78.242/4YRDMJ");
-            webView.loadUrl("https://android.g2slt.com")
-//        webView.loadUrl("https://develop.pokerteam.online/");
-        }
+        viewModel.configDomain.observe(viewLifecycleOwner, Observer { domain ->
+            if (savedInstanceState != null) webView.restoreState(savedInstanceState)
+            else webView.loadUrl(domain)
+        })
     }
 
     @SuppressLint("SetJavaScriptEnabled")

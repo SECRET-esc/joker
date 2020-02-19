@@ -15,12 +15,17 @@ class SharedPrefsManager(context: Context) {
         get() = prefs.getValue(KEY_TOKEN_FIREBASE, "")
         set(value) = prefs.setValue(KEY_TOKEN_FIREBASE, value)
 
+    var configDomain: String
+        get() = prefs.getValue(KEY_CONFIG_DOMAIN, "https://android.g2slt.com")
+        set(value) = prefs.setValue(KEY_CONFIG_DOMAIN, value)
+
 
 
     companion object {
         const val PREFS_NAME = "AppPrefs"
         const val KEY_FIRST_RUN = "firstRun"
         const val KEY_TOKEN_FIREBASE = "tokenFCM"
+        const val KEY_CONFIG_DOMAIN = "configDomain"
 
     }
 }
