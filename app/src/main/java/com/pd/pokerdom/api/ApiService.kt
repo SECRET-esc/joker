@@ -1,7 +1,8 @@
 package com.pd.pokerdom.api
 
 import com.pd.pokerdom.model.AppVersion
-import com.pd.pokerdom.model.Token
+import com.pd.pokerdom.model.TokenObj
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
@@ -12,6 +13,6 @@ interface ApiService {
     suspend fun getAppVersion(): AppVersion
 
     @POST("api/webhook/push/android")
-    suspend fun sendToken(token: Token): String
+    suspend fun sendToken(@Body tokenObj: TokenObj)
 
 }

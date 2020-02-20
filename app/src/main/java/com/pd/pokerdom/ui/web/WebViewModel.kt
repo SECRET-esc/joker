@@ -1,8 +1,9 @@
 package com.pd.pokerdom.ui.web
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.pd.pokerdom.model.Token
+import com.pd.pokerdom.model.TokenObj
 import com.pd.pokerdom.repository.TokenRepository
 import com.pd.pokerdom.storage.SharedPrefsManager
 import com.pd.pokerdom.ui.BaseViewModel
@@ -19,8 +20,12 @@ class WebViewModel(
         get() = _configDomain
 
     fun sentTokenToServer(userId: String?, customUserId: String?) {
-        ioScope.launch {
-            val token = Token(userId = userId, customUserId = customUserId, token = prefs.tokenFCM)
+        prefs.userId = userId
+        prefs.customUserId = customUserId
+
+        uiScope.launch {
+            val token = TokenObj(userId = userId, customUserId = customUserId, token = prefs.tokenFCM)
+            Log.d("MyTag", "$token")
             repository.sendToken(token)
         }
     }

@@ -4,11 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pd.pokerdom.model.AppVersion
-import com.pd.pokerdom.model.Token
-import com.pd.pokerdom.repository.TokenRepository
 import com.pd.pokerdom.repository.VersionRepository
-import com.pd.pokerdom.storage.SharedPrefsManager
-import com.pd.pokerdom.ui.BaseViewModel
 import kotlinx.coroutines.launch
 
 

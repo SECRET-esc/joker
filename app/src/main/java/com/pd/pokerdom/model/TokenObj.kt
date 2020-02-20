@@ -2,7 +2,7 @@ package com.pd.pokerdom.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Token(
+data class TokenObj(
     @SerializedName("user_id") var userId: String?,
     @SerializedName("custom_user_id") var customUserId: String?,
     @SerializedName("token") val token: String,

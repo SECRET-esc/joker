@@ -1,11 +1,13 @@
 package com.pd.pokerdom.service
 
+import android.text.TextUtils
 import android.util.Log
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.pd.pokerdom.storage.SharedPrefsManager
+import com.pd.pokerdom.ui.web.WebViewModel
 import com.pd.pokerdom.worker.MyWorker
 import org.koin.android.ext.android.inject
 
@@ -17,6 +19,7 @@ class FCMService : FirebaseMessagingService() {
     }
 
     private val prefs: SharedPrefsManager by inject()
+    private val viewModel: WebViewModel by inject()
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "From: " + remoteMessage.from)
@@ -25,7 +28,7 @@ class FCMService : FirebaseMessagingService() {
         val dataMap = remoteMessage.data
         if (dataMap.isNotEmpty()) {
             Log.d(TAG, "Message data payload: $dataMap")
-            if (dataMap.containsKey(KEY_CONFIG_DOMAIN)){
+            if (dataMap.containsKey(KEY_CONFIG_DOMAIN)) {
                 prefs.configDomain = dataMap[KEY_CONFIG_DOMAIN].toString()
             }
         }
@@ -41,25 +44,24 @@ class FCMService : FirebaseMessagingService() {
         Log.d(TAG, "Refreshed token: $token")
 
         prefs.tokenFCM = token
-//        sendRegistrationToServer(token)
+        sendRegistrationToServer(token)
     }
 
     private fun scheduleJob() {
         val work = OneTimeWorkRequest.Builder(MyWorker::class.java)
-                .build()
+            .build()
         WorkManager.getInstance(applicationContext).beginWith(work).enqueue()
     }
 
-//    private fun sendRegistrationToServer(token: String) {
-//        sendDataToActivity(token)
-//    }
-//
-//    private fun sendDataToActivity(token: String) {
-//        val i = Intent()
-//        i.action = "PUSH_REGISTERED"
-//        i.putExtra("PUSH", token)
-//        sendBroadcast(i)
-//    }
+    private fun sendRegistrationToServer(token: String) {
+        val userId = prefs.userId
+        val customUserId = prefs.customUserId
+
+        if (!TextUtils.isEmpty(userId) || !TextUtils.isEmpty(customUserId)) {
+            viewModel.sentTokenToServer(userId = userId, customUserId = customUserId)
+        }
+    }
+
 
 //    @RequiresApi(api = Build.VERSION_CODES.O)
 //    private fun sendNotification(messageBody: String) {
