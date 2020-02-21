@@ -7,14 +7,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
-import androidx.fragment.app.Fragment
-import android.view.View
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.pd.pokerdom.R
 import kotlinx.android.synthetic.main.fragment_web.*
 import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class WebFragment : Fragment(R.layout.fragment_web) {
 
@@ -42,26 +42,20 @@ class WebFragment : Fragment(R.layout.fragment_web) {
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
         webView.settings.databaseEnabled = true
-        webView.settings.loadsImagesAutomatically = true
         webView.settings.loadWithOverviewMode = true
-        webView.settings.userAgentString =
-            "Mozilla/5.0 (Linux; Android 7.0; Redmi Note 4 Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.111 Mobile Safari/537.36"
         webView.settings.useWideViewPort = true
         webView.settings.javaScriptCanOpenWindowsAutomatically = true
-        webView.settings.allowFileAccess = true
-        webView.settings.allowFileAccessFromFileURLs = true
-        webView.settings.allowUniversalAccessFromFileURLs = true
-        webView.settings.setAppCacheEnabled(false)
-        webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
-        webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+//        webView.settings.setAppCacheEnabled(false)
+//        webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+        webView.settings.setAppCacheEnabled(true)
+        webView.settings.cacheMode = WebSettings.LOAD_DEFAULT
+
+//        webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW // настоятельно не рекомендуется.
 
         webView.webViewClient = MyWebViewClient()
         webView.webChromeClient = MyWebChromeClient()
         webView.isFocusable = true
         webView.isFocusableInTouchMode = true
-        webView.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-        webView.isScrollbarFadingEnabled = false
-        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
 
         webView.setOnKeyListener { _, _, keyEvent ->
             if (keyEvent.keyCode == KeyEvent.KEYCODE_BACK && !webView.canGoBack()) {
