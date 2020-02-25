@@ -26,7 +26,11 @@ class WebViewModel(
         uiScope.launch {
             val token = TokenObj(userId = userId, customUserId = customUserId, token = prefs.tokenFCM)
             Log.d("MyTag", "$token")
-            repository.sendToken(token)
+            try {
+                repository.sendToken(token)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 }

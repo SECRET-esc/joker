@@ -45,10 +45,13 @@ class WebFragment : Fragment(R.layout.fragment_web) {
         webView.settings.loadWithOverviewMode = true
         webView.settings.useWideViewPort = true
         webView.settings.javaScriptCanOpenWindowsAutomatically = true
+        webView.settings.userAgentString =
+            "Mozilla/5.0 (Linux; Android 7.0; Redmi Note 4 Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.111 Mobile Safari/537.36"
 //        webView.settings.setAppCacheEnabled(false)
 //        webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         webView.settings.setAppCacheEnabled(true)
         webView.settings.cacheMode = WebSettings.LOAD_DEFAULT
+
 
 //        webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW // настоятельно не рекомендуется.
 
@@ -81,13 +84,21 @@ class WebFragment : Fragment(R.layout.fragment_web) {
         }
 
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            val host = Uri.parse(url).host
+            val host = Uri.parse(url).host.toString()
             Log.w(TAG, "shouldOverrideUrlLoading $url")
-            if (host != null && host.contains("pokerdom")) { // This is my website, so do not override; let my WebView load the page
-                return false
+
+            val listUrl = listOf(
+                "pokerdom", "oneclicklog", "facebook", "accounts.google", "accounts.youtube", "yandex", "odnoklassniki",
+                "ok.ru", "mail.ru", "vk.com", "g2slt"
+            )
+            for (linkName in listUrl) {
+                if (host.contains(linkName)) return false
             }
+
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            startActivity(intent)
+            if (intent.resolveActivity(context!!.packageManager) != null) {
+                startActivity(intent)
+            }
             return true
         }
     }
@@ -98,7 +109,7 @@ class WebFragment : Fragment(R.layout.fragment_web) {
             webView: WebView?, filePathCallback: ValueCallback<Array<Uri>>?,
             fileChooserParams: FileChooserParams?
         ): Boolean {
-            Log.i("onShowFileChooser", "openFileChooser()3 called.")
+            Log.i("onShowFileChooser", "openFileChooser() called.")
             if (fileValueCallback != null) {
                 fileValueCallback!!.onReceiveValue(null)
             }

@@ -38,7 +38,8 @@ class SharedPrefsManager(context: Context) {
         set(value) = prefs.setValue(KEY_CUSTOM_USER_ID, value)
 
     var configDomain: String
-        get() = prefs.getValue(KEY_CONFIG_DOMAIN, getLink())
+//        get() = prefs.getValue(KEY_CONFIG_DOMAIN, getLink())
+        get() = prefs.getValue(KEY_CONFIG_DOMAIN, linkProd)
         set(value) = prefs.setValue(KEY_CONFIG_DOMAIN, value)
 
 }
