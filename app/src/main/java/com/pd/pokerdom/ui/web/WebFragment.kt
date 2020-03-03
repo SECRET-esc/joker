@@ -78,8 +78,10 @@ class WebFragment : Fragment(R.layout.fragment_web) {
     }
 
     private inner class MyWebViewClient : WebViewClient() {
-        override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {
-            Log.d(TAG, "shouldInterceptRequest: ${request?.url}")
+
+        override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
+            val url = request.url.toString()
+            Log.d(TAG, "shouldInterceptRequest: $url")
             return super.shouldInterceptRequest(view, request)
         }
 

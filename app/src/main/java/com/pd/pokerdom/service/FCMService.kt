@@ -14,7 +14,6 @@ import org.koin.android.ext.android.inject
 class FCMService : FirebaseMessagingService() {
 
     companion object {
-        private const val TAG = "FCMService"
         private const val KEY_CONFIG_DOMAIN = "config_domain"
     }
 
@@ -22,26 +21,26 @@ class FCMService : FirebaseMessagingService() {
     private val viewModel: WebViewModel by inject()
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        Log.d(TAG, "From: " + remoteMessage.from)
+        Log.d("Firebase", "From: " + remoteMessage.from)
 
         // Check if message contains a data payload.
         val dataMap = remoteMessage.data
         if (dataMap.isNotEmpty()) {
-            Log.d(TAG, "Message data payload: $dataMap")
+            Log.d("Firebase", "Message data payload: $dataMap")
             if (dataMap.containsKey(KEY_CONFIG_DOMAIN)) {
                 prefs.configDomain = dataMap[KEY_CONFIG_DOMAIN].toString()
             }
         }
         // Check if message contains a notification payload.
         if (remoteMessage.notification != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.notification!!.body)
+            Log.d("Firebase", "Message Notification Body: " + remoteMessage.notification!!.body)
         }
 
     }
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        Log.d(TAG, "Refreshed token: $token")
+        Log.d("Firebase", "Refreshed token: $token")
 
         prefs.tokenFCM = token
         sendRegistrationToServer(token)

@@ -7,6 +7,13 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
+ext {
+    URL_WEBVIEW_DEV = '"https://develop.pokerdom.dev"' // dev
+    URL_WEBVIEW_PROD = '"https://android.g2slt.com"' // prod
+    URL_HOST_TOKEN_DEV = '"https://s.dev1.btcasino.com/"'
+    URL_HOST_TOKEN_PROD = '"https://s.playgames.casino/"'
+}
+
 android {
     signingConfigs {
         release {
@@ -35,6 +42,23 @@ android {
 //            useProguard true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+        }
+    }
+
+    flavorDimensions "version"
+    productFlavors {
+        dev {
+            dimension "version"
+            versionNameSuffix "_dev"
+            buildConfigField("String", "URL_WEBVIEW", URL_WEBVIEW_DEV)
+            buildConfigField("String", "URL_HOST_TOKEN", URL_HOST_TOKEN_DEV)
+        }
+        prod {
+            dimension "version"
+            versionNameSuffix "_prod"
+            buildConfigField("String", "URL_WEBVIEW", URL_WEBVIEW_PROD)
+            buildConfigField("String", "URL_HOST_TOKEN", URL_HOST_TOKEN_PROD)
+//            signingConfig signingConfigs.release
         }
     }
 
@@ -84,6 +108,11 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"
     implementation "com.google.code.gson:gson:2.8.6"
+
+    // Glide
+    def glide = '4.11.0'
+    implementation "com.github.bumptech.glide:glide:$glide"
+    kapt "com.github.bumptech.glide:compiler:$glide"
 
     // Coroutines
     def coroutines = "1.3.3"
