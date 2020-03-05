@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/webFragment">
+    app:startDestination="@id/webFragment"
+    tools:ignore="UnusedNavigation">
 
     <fragment
         android:id="@+id/webFragment"
@@ -12,11 +13,7 @@
         android:label="fragment_web"
         tools:layout="@layout/fragment_web" >
         <argument
-            android:name="keyNotifyLink"
-            app:argType="string"
-            app:nullable="true" />
+            android:name="ARG_NOTIFY_LINK"
+            app:argType="string" />
     </fragment>
-    <action
-        android:id="@+id/action_global_webFragment"
-        app:destination="@id/webFragment" />
 </navigation>

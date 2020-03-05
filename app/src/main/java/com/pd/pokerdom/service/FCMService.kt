@@ -7,7 +7,7 @@ import androidx.work.WorkManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.pd.pokerdom.storage.SharedPrefsManager
-import com.pd.pokerdom.ui.MainActivity
+import com.pd.pokerdom.ui.main.MainActivity
 import com.pd.pokerdom.ui.web.WebViewModel
 import com.pd.pokerdom.worker.MyWorker
 import org.koin.android.ext.android.inject

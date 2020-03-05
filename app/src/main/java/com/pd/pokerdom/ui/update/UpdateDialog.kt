@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.pd.pokerdom.model.AppVersion
-import com.pd.pokerdom.ui.StartActivity
 
 object UpdateDialog : DialogFragment() {
 

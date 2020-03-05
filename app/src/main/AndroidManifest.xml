@@ -21,12 +21,12 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="m">
 
-        <activity android:name=".ui.MainActivity"
+        <activity android:name=".ui.main.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
 
         <activity
-            android:name=".ui.StartActivity"
+            android:name=".ui.srart.StartActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@style/splashScreenTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">

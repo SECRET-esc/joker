@@ -5,8 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
-import android.view.MotionEvent
+import android.view.*
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -27,27 +26,17 @@ class WebFragment : Fragment(R.layout.fragment_web) {
     private val viewModel: WebViewModel by viewModel()
     private var fileValueCallback: ValueCallback<Array<Uri>>? = null
 
-//    private val args: WebFragmentArgs by navArgs()
+    private val args: WebFragmentArgs by navArgs()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupWebView()
 
-
-
-        if (savedInstanceState != null) {
-            webView.restoreState(savedInstanceState)
-        } else {
-/*            args.keyNotifyLink?.let { link ->
-                webView.loadUrl(link)
-            } ?:*/ defaultUrlLoad()
+        if (savedInstanceState != null) webView.restoreState(savedInstanceState)
+        else {
+            val link = args.ARGNOTIFYLINK
+            webView.loadUrl(link)
         }
-    }
-
-    private fun defaultUrlLoad() {
-        viewModel.configDomain.observe(viewLifecycleOwner, Observer { domain ->
-            webView.loadUrl(domain)
-        })
     }
 
     @SuppressLint("SetJavaScriptEnabled")

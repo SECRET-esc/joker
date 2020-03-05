@@ -5,7 +5,7 @@
     android:id="@+id/navigateRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.main.MainActivity">
 
     <fragment
         android:id="@+id/nav_host_fragment"
@@ -13,6 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/main_graph" />
+        tools:navGraph="@navigation/main_graph" />
 
 </FrameLayout>

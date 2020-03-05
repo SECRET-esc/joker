@@ -1,14 +1,15 @@
-package com.pd.pokerdom.ui
+package com.pd.pokerdom.ui.srart
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pd.pokerdom.model.AppVersion
 import com.pd.pokerdom.repository.VersionRepository
+import com.pd.pokerdom.ui.BaseViewModel
 import kotlinx.coroutines.launch
 
 
-class MainViewModel(private val repository: VersionRepository) : BaseViewModel() {
+class StartViewModel(private val repository: VersionRepository) : BaseViewModel() {
 
 
     private val _appVersion = MutableLiveData<AppVersion>()

@@ -1,6 +1,8 @@
 package com.pd.pokerdom.util
 
 import android.content.Context
+import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -65,4 +67,13 @@ fun checkForUpdate(serverVersion: String): Boolean {
     val existingVersionPatch = thisVersion.substringAfterLast(".")
     val newVersionPatch = serverVersion.substringAfterLast(".")
     return existingVersionPatch.toInt() < newVersionPatch.toInt()
+}
+
+fun printListBundle(bundle: Bundle?) {
+    if (bundle != null) {
+        Log.d("MyLog", "bundle.size() = " + bundle.size().toString())
+        for (key in bundle.keySet()) {
+            Log.d("MyLog", key + " : " + if (bundle.get(key) != null) bundle.get(key) else "NULL")
+        }
+    }
 }
