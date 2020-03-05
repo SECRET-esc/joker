@@ -11,6 +11,7 @@ import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import com.pd.pokerdom.R
 import kotlinx.android.synthetic.main.fragment_web.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -26,13 +27,26 @@ class WebFragment : Fragment(R.layout.fragment_web) {
     private val viewModel: WebViewModel by viewModel()
     private var fileValueCallback: ValueCallback<Array<Uri>>? = null
 
+//    private val args: WebFragmentArgs by navArgs()
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupWebView()
 
+
+
+        if (savedInstanceState != null) {
+            webView.restoreState(savedInstanceState)
+        } else {
+/*            args.keyNotifyLink?.let { link ->
+                webView.loadUrl(link)
+            } ?:*/ defaultUrlLoad()
+        }
+    }
+
+    private fun defaultUrlLoad() {
         viewModel.configDomain.observe(viewLifecycleOwner, Observer { domain ->
-            if (savedInstanceState != null) webView.restoreState(savedInstanceState)
-            else webView.loadUrl(domain)
+            webView.loadUrl(domain)
         })
     }
 

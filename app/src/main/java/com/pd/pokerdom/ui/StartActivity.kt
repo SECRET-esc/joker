@@ -3,11 +3,13 @@ package com.pd.pokerdom.ui
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.pd.pokerdom.R
 import com.pd.pokerdom.model.AppVersion
+import com.pd.pokerdom.service.FCMService
 import com.pd.pokerdom.ui.update.IUpdateDialog
 import com.pd.pokerdom.ui.update.UpdateDialog
 import com.pd.pokerdom.util.*
@@ -27,9 +29,22 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        checkNotification()
+    }
 
+    private fun checkNotification() {
+        intent.extras?.let {
+            if (!it.isEmpty) {
+                if (it.containsKey(FCMService.KEY_FCM_LINK)) {
+                    Log.d("Firebase", "[StartActivity] KEY_LINK: ${it[FCMService.KEY_FCM_LINK]}")
+                    MainActivity.open(context = this, link = it[FCMService.KEY_FCM_LINK].toString())
+                }
+            }
+        } ?: checkAppVersion()
+    }
+
+    private fun checkAppVersion() {
         viewModel.getAppVersion()
-
         viewModel.appVersion.observe(this, Observer { appVersion ->
             val serverVersionLimit = appVersion.versionLimit.toString()
             val serverVersion = appVersion.version.toString()
@@ -40,6 +55,7 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog 
             }
         })
     }
+
 
     private fun showDialog(version: AppVersion, lock: Boolean) {
         UpdateDialog.newInstance(this, version, lock)

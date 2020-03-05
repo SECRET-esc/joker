@@ -7,6 +7,7 @@ import androidx.work.WorkManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.pd.pokerdom.storage.SharedPrefsManager
+import com.pd.pokerdom.ui.MainActivity
 import com.pd.pokerdom.ui.web.WebViewModel
 import com.pd.pokerdom.worker.MyWorker
 import org.koin.android.ext.android.inject
@@ -15,28 +16,11 @@ class FCMService : FirebaseMessagingService() {
 
     companion object {
         private const val KEY_CONFIG_DOMAIN = "config_domain"
+        const val KEY_FCM_LINK = "link"
     }
 
     private val prefs: SharedPrefsManager by inject()
     private val viewModel: WebViewModel by inject()
-
-    override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        Log.d("Firebase", "From: " + remoteMessage.from)
-
-        // Check if message contains a data payload.
-        val dataMap = remoteMessage.data
-        if (dataMap.isNotEmpty()) {
-            Log.d("Firebase", "Message data payload: $dataMap")
-            if (dataMap.containsKey(KEY_CONFIG_DOMAIN)) {
-                prefs.configDomain = dataMap[KEY_CONFIG_DOMAIN].toString()
-            }
-        }
-        // Check if message contains a notification payload.
-        if (remoteMessage.notification != null) {
-            Log.d("Firebase", "Message Notification Body: " + remoteMessage.notification!!.body)
-        }
-
-    }
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
@@ -45,6 +29,30 @@ class FCMService : FirebaseMessagingService() {
         prefs.tokenFCM = token
         sendRegistrationToServer(token)
     }
+
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        super.onMessageReceived(remoteMessage)
+        Log.d("Firebase", "From: ${remoteMessage.from}")
+
+        remoteMessage.notification?.let {
+            Log.d("Firebase", "Message Notification Title: ${it.title}")
+            Log.d("Firebase", "Message Notification Body: ${it.body}")
+        }
+
+        remoteMessage.data.let {
+            if (it.isNotEmpty()) {
+                Log.d("Firebase", "Message data payload: $it")
+                if (it.containsKey(KEY_CONFIG_DOMAIN)) {
+                    prefs.configDomain = it[KEY_CONFIG_DOMAIN].toString()
+                }
+                if (it.containsKey(KEY_FCM_LINK)) {
+                    Log.d("Firebase", "KEY_LINK: ${it[KEY_FCM_LINK]}")
+                    MainActivity.open(this)
+                }
+            }
+        }
+    }
+
 
     private fun scheduleJob() {
         val work = OneTimeWorkRequest.Builder(MyWorker::class.java)

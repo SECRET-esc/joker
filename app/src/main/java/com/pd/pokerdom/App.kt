@@ -15,7 +15,7 @@ open class App : Application() {
     override fun onCreate() {
         super.onCreate()
         configureDi()
-//        configureFirebaseToken()
+        configureFirebaseToken()
     }
 
     private fun configureDi() =
