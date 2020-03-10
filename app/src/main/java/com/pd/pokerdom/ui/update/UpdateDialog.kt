@@ -14,7 +14,7 @@ object UpdateDialog : DialogFragment() {
 
     private lateinit var listener: IUpdateDialog
 
-    fun newInstance(listener: IUpdateDialog, version: AppVersion, lock: Boolean = true): UpdateDialog {
+    fun newInstance(listener: IUpdateDialog, version: AppVersion, lock: Boolean = false): UpdateDialog {
         val frag = UpdateDialog
         val args = Bundle()
         args.putParcelable(KEY_APP_VERSION, version)
@@ -37,7 +37,7 @@ object UpdateDialog : DialogFragment() {
                 listener.doPositiveClick()
             }
             .setNegativeButton(android.R.string.cancel) { d, i ->
-                if (!lock) {
+                if (lock) {
                     activity?.finish()
                     return@setNegativeButton
                 }

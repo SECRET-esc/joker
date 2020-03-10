@@ -51,8 +51,8 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog 
             val serverVersionLimit = appVersion.versionLimit.toString()
             val serverVersion = appVersion.version.toString()
             when {
-                checkForUpdate(serverVersionLimit) -> showDialog(version = appVersion, lock = false)
-                checkForUpdate(serverVersion) -> showDialog(version = appVersion, lock = true)
+                checkForUpdate(serverVersionLimit) -> showDialog(version = appVersion, lock = true)
+                checkForUpdate(serverVersion) -> showDialog(version = appVersion, lock = false)
                 else -> MainActivity.open(this)
             }
         })
@@ -104,9 +104,7 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog 
                 )
             }
         } else {
-            requestPermissionsCompat(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                PERMISSION_REQUEST_STORAGE
-            )
+            requestPermissionsCompat(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_STORAGE)
         }
     }
 
