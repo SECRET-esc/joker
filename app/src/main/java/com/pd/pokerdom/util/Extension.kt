@@ -38,9 +38,7 @@ fun View.showSnackbar(
 ) {
     val snackbar = Snackbar.make(this, msg, length)
     if (actionMessage != null) {
-        snackbar.setAction(actionMessage) {
-            action(this)
-        }.show()
+        snackbar.setAction(actionMessage) { action(this) }.show()
     }
 }
 

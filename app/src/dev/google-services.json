@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "92325041581",
+    "firebase_url": "https://develop-pokerteam-98ff7.firebaseio.com",
+    "project_id": "develop-pokerteam-98ff7",
+    "storage_bucket": "develop-pokerteam-98ff7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92325041581:android:06e5de4efbe779ccbc3d24",
+        "android_client_info": {
+          "package_name": "app.android_dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92325041581-gt92d90nmbsk4bbkqmutqhm8oa1h7t3q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWC4LiqUO_Bezgc5944QWV27gCf-iPglg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "92325041581-gt92d90nmbsk4bbkqmutqhm8oa1h7t3q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

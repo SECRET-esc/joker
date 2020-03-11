@@ -93,8 +93,8 @@ class WebFragment : Fragment(R.layout.fragment_web) {
             Log.w(TAG, "shouldOverrideUrlLoading $url")
 
             val listUrl = listOf(
-                "pokerdom", "oneclicklog", "facebook", "accounts.google", "accounts.youtube", "yandex", "odnoklassniki",
-                "ok.ru", "mail.ru", "vk.com", "g2slt"
+                "pokerdom", "joker", "oneclicklog", "facebook", "accounts.google", "accounts.youtube", "yandex",
+                "odnoklassniki", "ok.ru", "mail.ru", "vk.com", "g2slt"
             )
             for (linkName in listUrl) {
                 if (host.contains(linkName)) return false

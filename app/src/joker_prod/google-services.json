@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "992329799436",
+    "firebase_url": "https://joker-71c09.firebaseio.com",
+    "project_id": "joker-71c09",
+    "storage_bucket": "joker-71c09.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992329799436:android:a0c74a640f5f5bb18b9b29",
+        "android_client_info": {
+          "package_name": "com.joker.joker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "992329799436-rn7ld1hqbcpdid2b25a344kict0k7pjk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbb-1dk_cOcocgxGNKXWWmIvvCG9b0aBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "992329799436-rn7ld1hqbcpdid2b25a344kict0k7pjk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

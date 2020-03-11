@@ -1,7 +1,6 @@
 package com.pd.pokerdom.di
 
 import com.pd.pokerdom.BuildConfig
-import com.pd.pokerdom.Const.BASE_URL
 import com.pd.pokerdom.api.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -28,7 +27,8 @@ val networkModule = module {
     single {
         Retrofit.Builder()
             .client(get())
-            .baseUrl(BASE_URL)
+//            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.URL_WEBVIEW)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

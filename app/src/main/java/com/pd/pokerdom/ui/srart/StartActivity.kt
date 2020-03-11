@@ -7,7 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
-import com.pd.pokerdom.Const.URL_APK
+import com.pd.pokerdom.BuildConfig
 import com.pd.pokerdom.R
 import com.pd.pokerdom.model.AppVersion
 import com.pd.pokerdom.service.FCMService
@@ -31,6 +31,14 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         checkNotification()
+
+        checkHostException()
+    }
+
+    private fun checkHostException() {
+        viewModel.hostException.observe(this, Observer {
+            toast(it)
+        })
     }
 
     private fun checkNotification() {
@@ -58,14 +66,13 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog 
         })
     }
 
-
     private fun showDialog(version: AppVersion, lock: Boolean) {
         UpdateDialog.newInstance(this, version, lock)
             .show(supportFragmentManager, "dialog")
     }
 
     override fun doPositiveClick() {
-        downloadController = DownloadController(this, URL_APK)
+        downloadController = DownloadController(this, BuildConfig.URL_APK)
         checkStoragePermission()
     }
 

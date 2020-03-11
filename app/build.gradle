@@ -8,18 +8,31 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 ext {
-    URL_WEBVIEW_DEV = '"https://develop.pokerdom.dev"' // dev
-    URL_WEBVIEW_PROD = '"https://android.g2slt.com"' // prod
+    URL_WEBVIEW_DEV = '"https://develop.pokerdom.dev/"' // dev
+    URL_WEBVIEW_PROD_PD = '"https://android.g2slt.com/"' // prod_PD
+    URL_WEBVIEW_PROD_JOKER = '"https://joker.online/"' // prod_JOKER
+//    URL_WEBVIEW_PROD_JOKER = '"https://joker.win/"' // prod_JOKER
+    // token
     URL_HOST_TOKEN_DEV = '"https://s.dev1.btcasino.com/"'
-    URL_HOST_TOKEN_PROD = '"https://s.playgames.casino/"'
+    URL_HOST_TOKEN_PROD_PD = '"https://s.playgames.casino/"'
+    URL_HOST_TOKEN_PROD_JOKER = '" https://s.backend-casino.info/"'
+    //apk
+    URL_APK_PD = '"https://android.g2slt.com/play/tr/assets/pd.apk"'
+    URL_APK_JOKER = '"https://joker.win/play/tr/assets/joker.apk"'
 }
 
 android {
     signingConfigs {
-        release {
-            storeFile file('..\\keys\\key.jks')
+        releasePD {
+            storeFile file('..\\keys\\key_pd.jks')
             keyPassword '123123'
             keyAlias 'com.pd.pokerdom'
+            storePassword '123123'
+        }
+        releaseJoker {
+            storeFile file('..\\keys\\key_joker.jks')
+            keyPassword '123123'
+            keyAlias 'com.joker.joker'
             storePassword '123123'
         }
     }
@@ -41,7 +54,6 @@ android {
             minifyEnabled true
 //            useProguard true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
     }
 
@@ -49,20 +61,37 @@ android {
     productFlavors {
         dev {
             dimension "version"
+            applicationId "app.android_dev"
+            resValue "string", "app_name", "Dev"
             buildConfigField("String", "URL_WEBVIEW", URL_WEBVIEW_DEV)
             buildConfigField("String", "URL_HOST_TOKEN", URL_HOST_TOKEN_DEV)
+            buildConfigField("String", "URL_APK", URL_APK_PD)
         }
-        prod {
+        pd_prod {
             dimension "version"
-            buildConfigField("String", "URL_WEBVIEW", URL_WEBVIEW_PROD)
-            buildConfigField("String", "URL_HOST_TOKEN", URL_HOST_TOKEN_PROD)
+            applicationId "com.pd.pokerdom"
+            resValue "string", "app_name", "Pokerdom"
+            buildConfigField("String", "URL_WEBVIEW", URL_WEBVIEW_PROD_PD)
+            buildConfigField("String", "URL_HOST_TOKEN", URL_HOST_TOKEN_PROD_PD)
+            buildConfigField("String", "URL_APK", URL_APK_PD)
+            signingConfig signingConfigs.releasePD
+        }
+        joker_prod {
+            dimension "version"
+            applicationId "com.joker.joker"
+            resValue "string", "app_name", "Joker"
+            buildConfigField("String", "URL_WEBVIEW", URL_WEBVIEW_PROD_JOKER)
+            buildConfigField("String", "URL_HOST_TOKEN", URL_HOST_TOKEN_PROD_JOKER)
+            buildConfigField("String", "URL_APK", URL_APK_JOKER)
+            signingConfig signingConfigs.releaseJoker
         }
     }
 
     android.applicationVariants.all { variant ->
         variant.outputs.all { output ->
-            outputFileName = "${variant.applicationId}_${variant.buildType.name}" +
-                    "_v${variant.versionName}_${variant.productFlavors.get(0).name}.apk"
+            outputFileName = "${variant.applicationId}" +
+//                    "_${variant.productFlavors.get(0).name}" +
+                    "_${variant.buildType.name}_v${variant.versionName}.apk"
         }
     }
 
@@ -102,7 +131,7 @@ dependencies {
     // Firebase
     implementation 'com.google.firebase:firebase-core:17.2.3'
     implementation 'com.google.firebase:firebase-analytics:17.2.3'
-    implementation 'com.google.firebase:firebase-messaging:20.1.1'
+    implementation 'com.google.firebase:firebase-messaging:20.1.2'
     implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta01'
 
     // OkHttp
@@ -133,7 +162,7 @@ dependencies {
     implementation "org.koin:koin-android-viewmodel:$koin"
 
     // WorkManager(Kotlin + coroutines)
-    def work_version = "2.3.2"
+    def work_version = "2.3.3"
     implementation "androidx.work:work-runtime-ktx:$work_version"
 
     // Test

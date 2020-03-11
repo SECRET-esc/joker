@@ -31,7 +31,6 @@ class FCMService : FirebaseMessagingService() {
         super.onMessageReceived(remoteMessage)
         Log.d("Firebase", "From: ${remoteMessage.from}")
 
-
         remoteMessage.notification?.let {
             Log.d("Firebase", "Message Notification Title: ${it.title}")
             Log.d("Firebase", "Message Notification Body: ${it.body}")
@@ -56,11 +55,8 @@ class FCMService : FirebaseMessagingService() {
 //                    Log.d("Firebase", "KEY_LINK: ${it[KEY_FCM_LINK]}")
 //                    MainActivity.open(this, it[KEY_FCM_LINK])
                 }
-
             }
         }
-
-
     }
 
     private fun sendRegistrationToServer(token: String) {
