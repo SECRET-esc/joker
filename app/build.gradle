@@ -43,7 +43,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0.0"
+        versionName "1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -67,7 +67,7 @@ android {
             buildConfigField("String", "URL_HOST_TOKEN", URL_HOST_TOKEN_DEV)
             buildConfigField("String", "URL_APK", URL_APK_PD)
         }
-        pd_prod {
+        pd {
             dimension "version"
             applicationId "com.pd.pokerdom"
             resValue "string", "app_name", "Pokerdom"
@@ -76,7 +76,7 @@ android {
             buildConfigField("String", "URL_APK", URL_APK_PD)
             signingConfig signingConfigs.releasePD
         }
-        joker_prod {
+        joker {
             dimension "version"
             applicationId "com.joker.joker"
             resValue "string", "app_name", "Joker"
