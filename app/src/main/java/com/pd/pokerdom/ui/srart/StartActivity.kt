@@ -11,9 +11,12 @@ import com.pd.pokerdom.BuildConfig
 import com.pd.pokerdom.R
 import com.pd.pokerdom.model.AppVersion
 import com.pd.pokerdom.service.FCMService
+import com.pd.pokerdom.ui.inet.InetDialog
+import com.pd.pokerdom.ui.inet.InetDialog.INET_DIALOG
 import com.pd.pokerdom.ui.main.MainActivity
 import com.pd.pokerdom.ui.update.IUpdateDialog
 import com.pd.pokerdom.ui.update.UpdateDialog
+import com.pd.pokerdom.ui.update.UpdateDialog.UPDATE_DIALOG
 import com.pd.pokerdom.util.*
 import kotlinx.android.synthetic.main.activity_start.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -54,21 +57,32 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog 
     }
 
     private fun checkAppVersion() {
+        if (isNotConnecting()) {
+            InetDialog.newInstance().show(supportFragmentManager, INET_DIALOG)
+            return
+        }
         viewModel.getAppVersion()
         viewModel.appVersion.observe(this, Observer { appVersion ->
             val serverVersionLimit = appVersion.versionLimit.toString()
             val serverVersion = appVersion.version.toString()
             when {
-                checkForUpdate(serverVersionLimit) -> showDialog(version = appVersion, lock = true)
-                checkForUpdate(serverVersion) -> showDialog(version = appVersion, lock = false)
-                else -> MainActivity.open(this)
+                checkForUpdate(serverVersionLimit) -> showDialog(version = appVersion.version, lock = true)
+                checkForUpdate(serverVersion) -> showDialog(version = appVersion.version, lock = false)
+                else -> openMain()
             }
+        })
+
+        viewModel.openMain.observe(this, Observer {
+            if (it) openMain()
         })
     }
 
-    private fun showDialog(version: AppVersion, lock: Boolean) {
-        UpdateDialog.newInstance(this, version, lock)
-            .show(supportFragmentManager, "dialog")
+    private fun openMain() {
+        MainActivity.open(this)
+    }
+
+    private fun showDialog(version: String?, lock: Boolean) {
+        UpdateDialog.newInstance(this, version, lock).show(supportFragmentManager, UPDATE_DIALOG)
     }
 
     override fun doPositiveClick() {
@@ -77,9 +91,8 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog 
     }
 
     override fun doNegativeClick() {
-        MainActivity.open(this)
+        openMain()
     }
-
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {

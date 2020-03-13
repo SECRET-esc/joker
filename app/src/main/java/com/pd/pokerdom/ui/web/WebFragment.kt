@@ -5,13 +5,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.KeyEvent
+import android.view.MotionEvent
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.pd.pokerdom.R
+import com.pd.pokerdom.ui.inet.InetDialog
+import com.pd.pokerdom.ui.inet.InetDialog.INET_DIALOG
+import com.pd.pokerdom.util.isNotConnecting
 import kotlinx.android.synthetic.main.fragment_web.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -30,13 +33,14 @@ class WebFragment : Fragment(R.layout.fragment_web) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setupWebView()
 
-        if (savedInstanceState != null) webView.restoreState(savedInstanceState)
-        else {
-            val link = args.ARGNOTIFYLINK
-            webView.loadUrl(link)
+        if (activity!!.isNotConnecting()) {
+            InetDialog.newInstance().show(activity!!.supportFragmentManager, INET_DIALOG)
+            return
         }
+
+        setupWebView()
+        webView.loadUrl(args.ARGNOTIFYLINK)
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -55,9 +59,6 @@ class WebFragment : Fragment(R.layout.fragment_web) {
         webView.settings.setAppCacheEnabled(true)
         webView.settings.cacheMode = WebSettings.LOAD_DEFAULT
 
-
-//        webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW // настоятельно не рекомендуется.
-
         webView.webViewClient = MyWebViewClient()
         webView.webChromeClient = MyWebChromeClient()
         webView.isFocusable = true
@@ -75,11 +76,6 @@ class WebFragment : Fragment(R.layout.fragment_web) {
         webView.addJavascriptInterface(JavaScriptInterface(viewModel), "Android")
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        webView.saveState(outState)
-        super.onSaveInstanceState(outState)
-    }
-
     private inner class MyWebViewClient : WebViewClient() {
 
         override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
@@ -89,15 +85,10 @@ class WebFragment : Fragment(R.layout.fragment_web) {
         }
 
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            val host = Uri.parse(url).host.toString()
             Log.w(TAG, "shouldOverrideUrlLoading $url")
 
-            val listUrl = listOf(
-                "pokerdom", "joker", "oneclicklog", "facebook", "accounts.google", "accounts.youtube", "yandex",
-                "odnoklassniki", "ok.ru", "mail.ru", "vk.com", "g2slt"
-            )
-            for (linkName in listUrl) {
-                if (host.contains(linkName)) return false
+            if (URLUtil.isNetworkUrl(url)) {
+                return false
             }
 
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
@@ -124,10 +115,7 @@ class WebFragment : Fragment(R.layout.fragment_web) {
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             intent.type = "*/*"
 
-            startActivityForResult(
-                intent,
-                REQUEST_FILE_CHOOSER
-            )
+            startActivityForResult(intent, REQUEST_FILE_CHOOSER)
             return true
         }
     }

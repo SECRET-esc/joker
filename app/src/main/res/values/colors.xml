@@ -5,6 +5,8 @@
     <color name="colorAccent">#D81B60</color>
 
 
+    <color name="colorIco">#2ECC71</color>
+    <color name="colorIcoJoker">#AD00FF</color>
     <color name="colorBgJoker">#3B0A75</color>
 
 </resources>

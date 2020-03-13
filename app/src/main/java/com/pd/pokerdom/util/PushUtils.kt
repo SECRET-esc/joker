@@ -44,10 +44,10 @@ fun showNotification(
     val bitmapImage = applyImageUrl(imageLink)
 
     val notification = NotificationCompat.Builder(context, channelId)
-        .setSmallIcon(R.mipmap.ic_launcher)
+        .setSmallIcon(R.drawable.ic_logo)
         .setContentTitle(title)
         .setContentText(body)
-        .setColor(ContextCompat.getColor(context, R.color.colorAccent))
+        .setColor(ContextCompat.getColor(context, R.color.colorIco))
         .setDefaults(Notification.DEFAULT_ALL)
         .setAutoCancel(true)
         .setContentIntent(pendingIntent)
