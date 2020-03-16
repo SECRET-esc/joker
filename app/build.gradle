@@ -10,8 +10,8 @@ apply plugin: 'com.google.firebase.crashlytics'
 ext {
     URL_WEBVIEW_DEV = '"https://develop.pokerdom.dev/"' // dev
     URL_WEBVIEW_PROD_PD = '"https://android.g2slt.com/"' // prod_PD
-    URL_WEBVIEW_PROD_JOKER = '"https://joker.online/"' // prod_JOKER
-//    URL_WEBVIEW_PROD_JOKER = '"https://joker.win/"' // prod_JOKER
+//    URL_WEBVIEW_PROD_JOKER = '"https://joker.online/"' // prod_JOKER
+    URL_WEBVIEW_PROD_JOKER = '"https://joker.win/"' // prod_JOKER
     // token
     URL_HOST_TOKEN_DEV = '"https://s.dev1.btcasino.com/"'
     URL_HOST_TOKEN_PROD_PD = '"https://s.playgames.casino/"'
@@ -42,8 +42,8 @@ android {
         applicationId "com.pd.pokerdom"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.1.0"
+        versionCode 2
+        versionName "1.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true

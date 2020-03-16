@@ -24,7 +24,7 @@ class FCMService : FirebaseMessagingService() {
         Log.d("Firebase", "Refreshed token: $token")
 
         prefs.tokenFCM = token
-        sendRegistrationToServer(token)
+        sendRegistrationToServer(/*token*/)
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -59,7 +59,7 @@ class FCMService : FirebaseMessagingService() {
         }
     }
 
-    private fun sendRegistrationToServer(token: String) {
+    private fun sendRegistrationToServer(/*token: String*/) {
         val userId = prefs.userId
         val customUserId = prefs.customUserId
 

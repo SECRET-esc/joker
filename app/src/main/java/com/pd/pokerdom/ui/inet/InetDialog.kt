@@ -27,7 +27,7 @@ object InetDialog : DialogFragment() {
 
             }
             .setNegativeButton("Настройки") { _, _ ->
-                startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS))
+                startActivity(Intent(Settings.ACTION_SETTINGS))
             }
             .create()
     }
