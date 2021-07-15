@@ -1,4 +1,4 @@
-package com.pd.pokerdom.ui.srart
+package com.pd.pokerdom.ui.start
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.pd.pokerdom.model.AppVersion
 import com.pd.pokerdom.repository.VersionRepository
 import com.pd.pokerdom.ui.BaseViewModel
-import com.pd.pokerdom.util.checkForUpdate
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
 

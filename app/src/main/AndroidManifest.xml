@@ -26,7 +26,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize"/>
 
         <activity
-            android:name=".ui.srart.StartActivity"
+            android:name=".ui.start.StartActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@style/splashScreenTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">

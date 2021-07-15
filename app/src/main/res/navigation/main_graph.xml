@@ -15,5 +15,9 @@
         <argument
             android:name="ARG_NOTIFY_LINK"
             app:argType="string" />
+        <argument
+            android:name="ARG_DEBUG_TEST"
+            android:defaultValue="https://google.com"
+            app:argType="string"/>
     </fragment>
 </navigation>

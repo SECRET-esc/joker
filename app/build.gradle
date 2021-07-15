@@ -12,13 +12,19 @@ ext {
     URL_WEBVIEW_PROD_PD = '"https://android.g2slt.com/"' // prod_PD
 //    URL_WEBVIEW_PROD_JOKER = '"https://joker.online/"' // prod_JOKER
     URL_WEBVIEW_PROD_JOKER = '"https://joker.win/"' // prod_JOKER
+    URL_WEBVIEW_PROD_LIC = '"https://joker.ua"' // joker-license
     // token
     URL_HOST_TOKEN_DEV = '"https://s.dev1.btcasino.com/"'
     URL_HOST_TOKEN_PROD_PD = '"https://s.playgames.casino/"'
     URL_HOST_TOKEN_PROD_JOKER = '" https://s.backend-casino.info/"'
+    URL_HOST_TOKEN_PROD_LIC= '"https://s.jlgames.info"'
     //apk
     URL_APK_PD = '"https://android.g2slt.com/play/tr/assets/pd.apk"'
     URL_APK_JOKER = '"https://joker.win/play/tr/assets/joker.apk"'
+    URL_APK_LIC='"https://joker.ua/play/tr/assets/jokerua.apk"'
+
+
+
 }
 
 android {
@@ -37,11 +43,11 @@ android {
         }
     }
 
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.pd.pokerdom"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 2
         versionName "1.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -83,6 +89,15 @@ android {
             buildConfigField("String", "URL_WEBVIEW", URL_WEBVIEW_PROD_JOKER)
             buildConfigField("String", "URL_HOST_TOKEN", URL_HOST_TOKEN_PROD_JOKER)
             buildConfigField("String", "URL_APK", URL_APK_JOKER)
+            signingConfig signingConfigs.releaseJoker
+        }
+        joker_lic{
+            dimension "version"
+            applicationId "com.joker.license"
+            resValue "string", "app_name", "Jokerua"
+            buildConfigField("String", "URL_WEBVIEW", URL_WEBVIEW_PROD_LIC)
+            buildConfigField("String", "URL_HOST_TOKEN", URL_HOST_TOKEN_PROD_LIC)
+            buildConfigField("String", "URL_APK", URL_APK_LIC)
             signingConfig signingConfigs.releaseJoker
         }
     }
@@ -129,10 +144,10 @@ dependencies {
 //    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle"
 
     // Firebase
-    implementation 'com.google.firebase:firebase-core:17.2.3'
-    implementation 'com.google.firebase:firebase-analytics:17.2.3'
-    implementation 'com.google.firebase:firebase-messaging:20.1.2'
-    implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta01'
+    implementation 'com.google.firebase:firebase-core:19.0.0'
+    implementation 'com.google.firebase:firebase-analytics:19.0.0'
+    implementation 'com.google.firebase:firebase-messaging:19.0.0'
+    implementation 'com.google.firebase:firebase-crashlytics:18.1.0'
 
     // OkHttp
     def okhttp = '4.4.0'
@@ -167,6 +182,6 @@ dependencies {
 
     // Test
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }

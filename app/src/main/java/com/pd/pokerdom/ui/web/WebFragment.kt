@@ -11,6 +11,7 @@ import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.pd.pokerdom.Const.USER_AGENT_STRING
 import com.pd.pokerdom.R
 import com.pd.pokerdom.ui.inet.InetDialog
 import com.pd.pokerdom.ui.inet.InetDialog.INET_DIALOG
@@ -28,7 +29,6 @@ class WebFragment : Fragment(R.layout.fragment_web) {
 
     private val viewModel: WebViewModel by viewModel()
     private var fileValueCallback: ValueCallback<Array<Uri>>? = null
-
     private val args: WebFragmentArgs by navArgs()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -40,7 +40,9 @@ class WebFragment : Fragment(R.layout.fragment_web) {
         }
 
         setupWebView()
+        // args.ARGDEBUGTEST - to show google site for testing
         webView.loadUrl(args.ARGNOTIFYLINK)
+        Log.d("DebugXML", "Args is args $args")
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -52,8 +54,7 @@ class WebFragment : Fragment(R.layout.fragment_web) {
         webView.settings.loadWithOverviewMode = true
         webView.settings.useWideViewPort = true
         webView.settings.javaScriptCanOpenWindowsAutomatically = true
-        webView.settings.userAgentString =
-            "Mozilla/5.0 (Linux; Android 7.0; Redmi Note 4 Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.111 Mobile Safari/537.36"
+        webView.settings.userAgentString = USER_AGENT_STRING
 //        webView.settings.setAppCacheEnabled(false)
 //        webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         webView.settings.setAppCacheEnabled(true)
@@ -84,6 +85,7 @@ class WebFragment : Fragment(R.layout.fragment_web) {
             return super.shouldInterceptRequest(view, request)
         }
 
+        @SuppressLint("QueryPermissionsNeeded")
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
             Log.w(TAG, "shouldOverrideUrlLoading $url")
 

@@ -1,4 +1,4 @@
-package com.pd.pokerdom.ui.srart
+package com.pd.pokerdom.ui.start
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.pd.pokerdom.BuildConfig
 import com.pd.pokerdom.R
-import com.pd.pokerdom.model.AppVersion
 import com.pd.pokerdom.service.FCMService
 import com.pd.pokerdom.ui.inet.InetDialog
 import com.pd.pokerdom.ui.inet.InetDialog.INET_DIALOG
@@ -34,7 +33,6 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         checkNotification()
-
         checkHostException()
     }
 

@@ -31,7 +31,12 @@ open class App : Application() {
 
         FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
             Log.d("Firebase", "token ${it.token}")
+
         }
+
+//       val id =  FirebaseInstallations.getInstance().id
+//        Log.d("IDFirebase", "id $id")
+
 
 //        Thread(Runnable {
 //            try {

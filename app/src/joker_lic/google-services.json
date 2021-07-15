@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "54782064747",
+    "project_id": "joker-lic",
+    "storage_bucket": "joker-lic.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54782064747:android:001ed7c84a187ea850592e",
+        "android_client_info": {
+          "package_name": "com.joker.license"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54782064747-h0atsrnuel73fpebdoq43j0k4ijjk1ud.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.joker.license",
+            "certificate_hash": "f287732d6096be872df4de18047e4f1f6c40490a"
+          }
+        },
+        {
+          "client_id": "54782064747-125ke3jtdd5jlt642maeu2anin8ugcpa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw1tuMTM1WjoA6KLCt4hGkwNhLn5j5PAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54782064747-125ke3jtdd5jlt642maeu2anin8ugcpa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
