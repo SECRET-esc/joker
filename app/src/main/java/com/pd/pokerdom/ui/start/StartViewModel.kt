@@ -1,16 +1,23 @@
 package com.pd.pokerdom.ui.start
 
+import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.pd.pokerdom.model.AppVersion
 import com.pd.pokerdom.repository.VersionRepository
+import com.pd.pokerdom.storage.SharedPrefsManager
 import com.pd.pokerdom.ui.BaseViewModel
+import com.pd.pokerdom.ui.main.MainActivity
+import com.pd.pokerdom.ui.main.MainViewModel
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
 
 
+
 class StartViewModel(private val repository: VersionRepository) : BaseViewModel() {
+
 
     private val _appVersion = MutableLiveData<AppVersion>()
     val appVersion: LiveData<AppVersion>

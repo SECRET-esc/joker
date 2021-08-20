@@ -6,13 +6,17 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import com.pd.pokerdom.BuildConfig
 import com.pd.pokerdom.R
 import com.pd.pokerdom.service.FCMService
+import com.pd.pokerdom.storage.SharedPrefsManager
 import com.pd.pokerdom.ui.inet.InetDialog
 import com.pd.pokerdom.ui.inet.InetDialog.INET_DIALOG
 import com.pd.pokerdom.ui.main.MainActivity
+import com.pd.pokerdom.ui.main.MainViewModel
 import com.pd.pokerdom.ui.update.IUpdateDialog
 import com.pd.pokerdom.ui.update.UpdateDialog
 import com.pd.pokerdom.ui.update.UpdateDialog.UPDATE_DIALOG
@@ -29,6 +33,8 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog 
 
     private val viewModel: StartViewModel by viewModel()
     private lateinit var downloadController: DownloadController
+    private val navController: NavController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
+    private var originSite: String? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +69,8 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog 
         viewModel.appVersion.observe(this, Observer { appVersion ->
             val serverVersionLimit = appVersion.versionLimit.toString()
             val serverVersion = appVersion.version.toString()
+            originSite = appVersion.site.toString()
+            Log.d("siteTestLink", "Link ${appVersion.site.toString()}")
             when {
                 checkForUpdate(serverVersionLimit) -> showDialog(version = appVersion.version, lock = true)
                 checkForUpdate(serverVersion) -> showDialog(version = appVersion.version, lock = false)
@@ -76,7 +84,7 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog 
     }
 
     private fun openMain() {
-        MainActivity.open(this)
+        MainActivity.open(this, if (originSite?.length != 0 && originSite != null) originSite else null)
     }
 
     private fun showDialog(version: String?, lock: Boolean) {

@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun loadNotification() {
         val extra = intent.extras
         val link = extra?.getString(KEY_FCM_LINK)
+        Log.d("testFCMLINK", "Link $extra")
         intent.removeExtra(KEY_FCM_LINK)
         link?.let {
             setupGraph(it)
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun defaultUrlLoad() {
         viewModel.configDomain.observe(this, Observer {
+            Log.d("siteTestLink", "Link $it")
             setupGraph(it)
         })
     }
