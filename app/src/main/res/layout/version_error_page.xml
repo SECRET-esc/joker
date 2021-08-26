@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/bgColor"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="128dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/full_logo"
+        android:contentDescription="@string/joker_logo" />
+
+    <ImageView
+        android:id="@+id/versionErr"
+        android:layout_width="365dp"
+        android:layout_height="315dp"
+        android:layout_marginTop="132dp"
+        android:contentDescription="@string/error_image_no_connection_for_joker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.347"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/error_version" />
+
+    <TextView
+        android:id="@+id/no_connection_header"
+        android:layout_width="355dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="340dp"
+        android:fontFamily="@font/bold_font"
+        android:text="@string/update_app_header"
+        android:textAlignment="center"
+        android:textColor="@color/textColor"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/versionErr"
+        tools:targetApi="p" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="300dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/light_font"
+        android:text="@string/version_error_body"
+        android:textAlignment="center"
+        android:textColor="@color/textColor"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/no_connection_header" />
+
+    <Button
+        android:id="@+id/versionButton"
+        android:layout_width="276dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/rounded_corner"
+        android:fontFamily="@font/bold_font"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        app:cornerRadius="100dp"
+        android:text="@string/button_version_update_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

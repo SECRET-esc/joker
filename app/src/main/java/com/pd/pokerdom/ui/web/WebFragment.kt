@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.pd.pokerdom.Const.USER_AGENT_STRING
 import com.pd.pokerdom.R
@@ -29,16 +30,18 @@ class WebFragment : Fragment(R.layout.fragment_web) {
 
     private val viewModel: WebViewModel by viewModel()
     private var fileValueCallback: ValueCallback<Array<Uri>>? = null
+
     private val args: WebFragmentArgs by navArgs()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+
+
         if (activity!!.isNotConnecting()) {
-            InetDialog.newInstance().show(activity!!.supportFragmentManager, INET_DIALOG)
+//            InetDialog.newInstance().show(activity!!.supportFragmentManager, INET_DIALOG)
             return
         }
-
         setupWebView()
         // args.ARGDEBUGTEST - to show google site for testing
         webView.loadUrl(args.ARGNOTIFYLINK)

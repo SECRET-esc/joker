@@ -2,18 +2,21 @@ package com.pd.pokerdom
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.observe
 import com.google.firebase.iid.FirebaseInstanceId
 import com.pd.pokerdom.di.appComponent
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import java.io.IOException
+import androidx.lifecycle.Observer
 
 
-open class App : Application() {
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+//        checkConnectionState()
         configureDi()
         configureFirebaseToken()
     }
@@ -25,6 +28,15 @@ open class App : Application() {
             modules(appComponent)
         }
 
+
+//    private fun checkConnectionState() {
+//        NetworkLiveData.init(this)
+//        Log.d("Observer", "State: ${NetworkLiveData.isNetworkAvaiable()}")
+//        NetworkLiveData.observeForever {
+//            Log.d("Observer", "State: ${it}")
+//        }
+//    }
+
     private fun configureFirebaseToken() {
 //        val token = FirebaseInstanceId.getInstance().token
 //        Log.d("Firebase", "token1 $token")
@@ -33,6 +45,8 @@ open class App : Application() {
             Log.d("Firebase", "token ${it.token}")
 
         }
+
+
 
 //       val id =  FirebaseInstallations.getInstance().id
 //        Log.d("IDFirebase", "id $id")

@@ -2,5 +2,8 @@
 <resources>
 
     <color name="colorIco">#AD00FF</color>
+    <color name="bgColor">#3B0A75</color>
+    <color name="textColor">#FFF</color>
+    <color name="buttonColor">#AD00FF</color>
 
 </resources>
