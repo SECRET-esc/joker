@@ -6,13 +6,14 @@ import com.pd.pokerdom.model.TokenObj
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Url
 
 interface ApiService {
 
-    @GET("play/tr/assets/version.json") // GET Version
-    suspend fun getAppVersion(): AppVersion
-
-    @POST("${URL_HOST_TOKEN}api/webhook/push/android") // POST Token (prod)
-    suspend fun sendToken(@Body tokenObj: TokenObj)
+    @GET // GET Version
+    suspend fun getAppVersion(@Url url: String): AppVersion
+//"
+    @POST
+    suspend fun sendToken(@Body tokenObj: TokenObj, @Url url: String)
 
 }

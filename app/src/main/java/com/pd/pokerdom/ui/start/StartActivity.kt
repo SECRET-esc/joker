@@ -36,6 +36,9 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
     companion object {
         private const val PERMISSION_REQUEST_STORAGE = 100
     }
+
+
+    private var versionChecked: Boolean = false;
     private val viewModel: StartViewModel by viewModel()
     private lateinit var downloadController: DownloadController
     private val navController: NavController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
@@ -46,7 +49,6 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
         super.onCreate(savedInstanceState)
 
         registerReceiver(ConnectivityReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
-
         Log.d("Mylog", "[StartActivity]")
 
     }
@@ -67,8 +69,14 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
             Log.d("Observer", "isConnected: $isConnected")
             ConnectionStateActivity.open(this)
         } else {
-            checkHostException()
-            checkAppVersion()
+            if (!versionChecked) {
+                versionChecked = true
+                checkHostException()
+                checkAppVersion()
+            } else {
+                openMain()
+            }
+
 //            if (networkType()) {
 //                Toast.makeText(this, "You are online now.!!!" + "\n Connected to Wifi Network", Toast.LENGTH_LONG).show()
 //            } else {

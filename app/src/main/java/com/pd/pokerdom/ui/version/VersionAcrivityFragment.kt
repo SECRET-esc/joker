@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.pd.pokerdom.R
 import com.pd.pokerdom.ui.connection.ConnectionStateActivity
@@ -30,11 +31,14 @@ class VersionActivityFragment: AppCompatActivity(R.layout.version_error_page) {
         Log.d("Mylog", "[VersionActivityFragment]")
 
 
-        val button: Button = findViewById(R.id.versionButton)
-
-        button.setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
-            startActivity(browserIntent)
-        }
+//        val button = act.findViewById(R.id.versionButton)
+//
+//        button.setOnClickListener {
+//            Log.d("clickEvent", "Clicked!")
+//            Toast.makeText(this, "Clicked!", Toast.LENGTH_LONG).show()
+//
+////            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
+////            startActivity(browserIntent)
+//        }
     }
 }

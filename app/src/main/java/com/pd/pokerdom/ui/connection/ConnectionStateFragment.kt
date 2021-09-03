@@ -27,6 +27,7 @@ class ConnectionStateActivity: AppCompatActivity(R.layout.fragment_connection_st
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
+        overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
         Log.d("Mylog", "[ConnectionStateFragment]")
     }
 }

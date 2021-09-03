@@ -12,12 +12,12 @@ ext {
     URL_WEBVIEW_PROD_PD = '"https://android.g2slt.com/"' // prod_PD
 //    URL_WEBVIEW_PROD_JOKER = '"https://joker.online/"' // prod_JOKER
     URL_WEBVIEW_PROD_JOKER = '"https://joker.win/"' // prod_JOKER
-    URL_WEBVIEW_PROD_LIC = '"https://joker.ua"' // joker-license prod
+    URL_WEBVIEW_PROD_LIC = '"https://joker.ua/"' // joker-license prod
     // token
-    URL_HOST_TOKEN_DEV = '"https://joker.ua"'
-    URL_HOST_TOKEN_PROD_PD = '"https://joker.ua"'
-    URL_HOST_TOKEN_PROD_JOKER = '"https://joker.ua"'
-    URL_HOST_TOKEN_PROD_LIC= '"https://joker.ua"'
+    URL_HOST_TOKEN_DEV = '"https://s.jlgames.info"'
+    URL_HOST_TOKEN_PROD_PD = '"https://s.jlgames.info"'
+    URL_HOST_TOKEN_PROD_JOKER = '"https://s.backend-casino.info"'
+    URL_HOST_TOKEN_PROD_LIC= '"https://s.jlgames.info"'
     //apk
     URL_APK_PD = '"https://android.g2slt.com/play/tr/assets/pd.apk"'
     URL_APK_JOKER = '"https://joker.win/play/tr/assets/joker.apk"'

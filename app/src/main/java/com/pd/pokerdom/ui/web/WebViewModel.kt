@@ -22,7 +22,9 @@ class WebViewModel(
             Log.d("MyTag", "$token")
             try {
                 repository.sendToken(token)
+                Log.d("MyTag", "Sent!")
             } catch (e: Exception) {
+                Log.d("MyTag", "Not sent! Error: $e" )
                 e.printStackTrace()
             }
         }
