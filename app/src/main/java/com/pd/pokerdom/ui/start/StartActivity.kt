@@ -9,7 +9,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -25,8 +24,8 @@ import com.pd.pokerdom.ui.update.IUpdateDialog
 import com.pd.pokerdom.ui.update.UpdateDialog
 import com.pd.pokerdom.ui.update.UpdateDialog.UPDATE_DIALOG
 import com.pd.pokerdom.ui.version.VersionActivityFragment
+import com.pd.pokerdom.ui.version.VersionControl
 import com.pd.pokerdom.util.*
-import io.github.g00fy2.versioncompare.Version
 import kotlinx.android.synthetic.main.activity_start.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -37,9 +36,9 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
         private const val PERMISSION_REQUEST_STORAGE = 100
     }
 
-
     private var versionChecked: Boolean = false;
-    private val viewModel: StartViewModel by viewModel()
+    private val versionControl: VersionControl by viewModel()
+//    private val viewModel: StartViewModel by viewModel()
     private lateinit var downloadController: DownloadController
     private val navController: NavController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
     private var originSite: String? = null;
@@ -56,6 +55,7 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
 
     override fun onResume() {
         super.onResume()
+        Log.d("Observer", "Resume")
         ConnectivityReceiver.connectivityReceiverListener = this
     }
 
@@ -71,7 +71,7 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
         } else {
             if (!versionChecked) {
                 versionChecked = true
-                checkHostException()
+//                checkHostException()
                 checkAppVersion()
             } else {
                 openMain()
@@ -93,11 +93,11 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
     }
 
 
-    private fun checkHostException() {
-        viewModel.hostException.observe(this, Observer {
-            toast(it)
-        })
-    }
+//    private fun checkHostException() {
+//        viewModel.hostException.observe(this, Observer {
+//            toast(it)
+//        })
+//    }
     private fun checkNotification() {
         val bundle = intent.extras
         printListBundle(bundle)
@@ -111,19 +111,33 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
     }
 
     private fun checkAppVersion() {
+
+        val response: Array<Any> = versionControl.getVersion()
+
+        val errorLimit: Boolean = response[0] as Boolean
+        originSite = response[1] as String
+        if (errorLimit) {
+            return VersionActivityFragment.open(this)
+        } else {
+            openMain()
+        }
 //        if (isNotConnecting()) {
 //            ConnectionStateActivity.open(this)
 //            return
 //        }
-        viewModel.getAppVersion()
-        viewModel.appVersion.observe(this, { appVersion ->
-            val serverVersionLimit = appVersion.versionLimit.toString()
-            val serverVersion = appVersion.version.toString()
-            originSite = appVersion.site.toString()
-            Log.d("siteTestLink", "Link ${appVersion.site.toString()}")
-            compareVersion(serverVersionLimit)
+//        viewModel.getAppVersion()
+//        viewModel.appVersion.observe(this, { appVersion ->
+//            val serverVersionLimit = appVersion.versionLimit.toString()
+//            val serverVersion = appVersion.version.toString()
+//            originSite = appVersion.site.toString()
+//            Log.d("siteTestLink", "Link ${appVersion.site.toString()}")
+//            compareVersion(serverVersionLimit)
             // checking on app version
-        })
+
+//        }
+//    )
+
+
 
 
 
@@ -134,17 +148,17 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
     }
 
 
-    private fun compareVersion(versionLimit: String) {
-        if (Version(versionLimit).isHigherThan(BuildConfig.VERSION_NAME)) {
-            val bool = Version(versionLimit).isHigherThan(BuildConfig.VERSION_NAME)
-            Log.d("MyLog", "[VERSION_NAME] --- $bool")
-            return VersionActivityFragment.open(this)
-        } else {
-            val bool = Version(versionLimit).isHigherThan(BuildConfig.VERSION_NAME)
-            Log.d("MyLog", "[VERSION_NAME] $bool $versionLimit")
-            openMain()
-        }
-    }
+//    private fun compareVersion(versionLimit: String) {
+//        if (Version(versionLimit).isHigherThan(BuildConfig.VERSION_NAME)) {
+//            val bool = Version(versionLimit).isHigherThan(BuildConfig.VERSION_NAME)
+//            Log.d("MyLog", "[VERSION_NAME] --- $bool")
+//            return VersionActivityFragment.open(this)
+//        } else {
+//            val bool = Version(versionLimit).isHigherThan(BuildConfig.VERSION_NAME)
+//            Log.d("MyLog", "[VERSION_NAME] $bool $versionLimit")
+//            openMain()
+//        }
+//    }
 
     private fun openMain() {
         MainActivity.open(this, if (originSite?.length != 0 && originSite != null) originSite else null)

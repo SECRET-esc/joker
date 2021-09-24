@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.pd.pokerdom.storage.SharedPrefsManager
+import com.pd.pokerdom.ui.main.MainActivity
 import com.pd.pokerdom.ui.web.WebViewModel
 import com.pd.pokerdom.util.showNotification
 import org.koin.android.ext.android.inject
@@ -29,12 +30,12 @@ class FCMService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
-        Log.d("Firebase", "From: ${remoteMessage.from}")
+        Log.d("FirebaseMessage", "From: ${remoteMessage.from}")
 
         remoteMessage.notification?.let {
-            Log.d("Firebase", "Message Notification Title: ${it.title}")
-            Log.d("Firebase", "Message Notification Body: ${it.body}")
-            Log.d("Firebase", "Message Notification imageUrl: ${it.imageUrl}")
+            Log.d("FirebaseMessage", "Message Notification Title: ${it.title}")
+            Log.d("FirebaseMessage", "Message Notification Body: ${it.body}")
+            Log.d("FirebaseMessage", "Message Notification imageUrl: ${it.imageUrl}")
 
             showNotification(
                 context = this,
@@ -45,18 +46,18 @@ class FCMService : FirebaseMessagingService() {
             )
         }
 
-        remoteMessage.data.let {
-            if (it.isNotEmpty()) {
-                Log.d("Firebase", "Message Data: $it")
-                if (it.containsKey(KEY_CONFIG_DOMAIN)) {
-                    prefs.configDomain = it[KEY_CONFIG_DOMAIN].toString()
-                }
-                if (it.containsKey(KEY_FCM_LINK)) {
-//                    Log.d("Firebase", "KEY_LINK: ${it[KEY_FCM_LINK]}")
+//        remoteMessage.data.let {
+//            if (it.isNotEmpty()) {
+//                Log.d("FirebaseMessage", "Message Data: $it")
+//                if (it.containsKey(KEY_CONFIG_DOMAIN)) {
+//                    prefs.configDomain = it[KEY_CONFIG_DOMAIN].toString()
+//                }
+//                if (it.containsKey(KEY_FCM_LINK)) {
+//                    Log.d("FirebaseMessage", "KEY_LINK: ${it[KEY_FCM_LINK]}")
 //                    MainActivity.open(this, it[KEY_FCM_LINK])
-                }
-            }
-        }
+//                }
+//            }
+//        }
     }
 
     private fun sendRegistrationToServer(/*token: String*/) {

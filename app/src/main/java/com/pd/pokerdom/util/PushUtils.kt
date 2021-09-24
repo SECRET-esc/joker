@@ -1,5 +1,6 @@
 package com.pd.pokerdom.util
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -21,6 +22,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.net.URL
 
+@SuppressLint("UnspecifiedImmutableFlag")
 fun showNotification(
     context: Context,
     title: String?,

@@ -22,10 +22,6 @@ class StartViewModel(private val repository: VersionRepository) : BaseViewModel(
     val hostException: LiveData<String>
         get() = _hostException
 
-    private val _openMain = MutableLiveData<Boolean>()
-    val openMain: LiveData<Boolean>
-        get() = _openMain
-
     fun getAppVersion() {
         uiScope.launch {
             try {
@@ -34,10 +30,8 @@ class StartViewModel(private val repository: VersionRepository) : BaseViewModel(
                 _appVersion.value = result
             } catch (e: UnknownHostException) {
                 _hostException.value = e.message
-                _openMain.value = true
             } catch (e: Exception) {
                 e.printStackTrace()
-                _openMain.value = true
             }
         }
     }

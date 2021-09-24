@@ -1,18 +1,17 @@
 package com.pd.pokerdom.ui.main
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.pd.pokerdom.R
 import com.pd.pokerdom.service.FCMService.Companion.KEY_FCM_LINK
+import com.pd.pokerdom.ui.version.VersionActivityFragment
+import com.pd.pokerdom.ui.version.VersionControl
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -31,9 +30,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             context.startActivity(intent)
         }
     }
-
+    private val versionControl: VersionControl by viewModel()
     private val viewModel: MainViewModel by viewModel()
     private val navController: NavController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
+
+    private var originSite: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +47,23 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 //        navController.navigate(R.id.no_connection)
         loadNotification()
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        val response: Array<Any> = versionControl.getVersion()
+
+        val errorLimit: Boolean = response[0] as Boolean
+        val originSite = response[1] as String
+        if (errorLimit) {
+            return VersionActivityFragment.open(this)
+        }
+
+        if (originSite != this.originSite) {
+            this.setupGraph(originSite)
+        }
+    }
+
 
     private fun loadNotification() {
         val extra = intent.extras
@@ -64,7 +82,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         })
     }
 
-    private fun setupGraph(it: String?) {
+    private fun setupGraph(it: String) {
+        originSite = it
         val bundle = Bundle()
         bundle.putString(ARG_NOTIFY_LINK, it)
         val graph = navController.navInflater.inflate(R.navigation.main_graph)
