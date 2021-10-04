@@ -13,6 +13,7 @@ class SharedPrefsManager(context: Context) {
         private const val KEY_USER_ID = "userId"
         private const val KEY_CUSTOM_USER_ID = "customUserId"
         private const val KEY_CONFIG_DOMAIN = "configDomain"
+        private const val KEY_IS_FIRST_LUNCH = "isFirstLunch"
     }
 
     private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -36,5 +37,9 @@ class SharedPrefsManager(context: Context) {
     var configDomain: String
         get() = prefs.getValue(KEY_CONFIG_DOMAIN, URL_WEBVIEW)
         set(value) = prefs.setValue(KEY_CONFIG_DOMAIN, value)
+
+    var isFirstLunch: Boolean
+        get() = prefs.getValue(KEY_IS_FIRST_LUNCH, true)
+        set(value) = prefs.setValue(KEY_IS_FIRST_LUNCH, value)
 
 }

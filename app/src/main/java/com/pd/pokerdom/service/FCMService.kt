@@ -15,6 +15,7 @@ class FCMService : FirebaseMessagingService() {
     companion object {
         private const val KEY_CONFIG_DOMAIN = "config_domain"
         const val KEY_FCM_LINK = "link"
+        const val KEY_FROM_NOTIFICATION = "fromnotification"
     }
 
     private val prefs: SharedPrefsManager by inject()
@@ -36,6 +37,7 @@ class FCMService : FirebaseMessagingService() {
             Log.d("FirebaseMessage", "Message Notification Title: ${it.title}")
             Log.d("FirebaseMessage", "Message Notification Body: ${it.body}")
             Log.d("FirebaseMessage", "Message Notification imageUrl: ${it.imageUrl}")
+            Log.d("FirebaseMessage", "Message payload: ${remoteMessage.data}")
 
             showNotification(
                 context = this,

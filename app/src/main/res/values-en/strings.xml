@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_notification_channel_id">fcm_default_channel</string>
+    <string name="no_connection_text_header">No network</string>
+    <string name="no_connection_text_body">Please, check your internet connection in network settings.</string>
+    <string name="update_app_header">Please, update the app</string>
+    <string name="version_error_body">Your app is out of date. Download the updated version.</string>
+    <string name="button_version_update_text">Update</string>
+</resources>

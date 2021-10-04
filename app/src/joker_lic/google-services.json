@@ -1,42 +1,78 @@
 {
   "project_info": {
-    "project_number": "54782064747",
-    "project_id": "joker-lic",
-    "storage_bucket": "joker-lic.appspot.com"
+    "project_number": "992329799436",
+    "firebase_url": "https://joker-71c09.firebaseio.com",
+    "project_id": "joker-71c09",
+    "storage_bucket": "joker-71c09.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:54782064747:android:001ed7c84a187ea850592e",
+        "mobilesdk_app_id": "1:992329799436:android:a0c74a640f5f5bb18b9b29",
         "android_client_info": {
-          "package_name": "com.joker.license"
+          "package_name": "com.joker.joker"
         }
       },
       "oauth_client": [
         {
-          "client_id": "54782064747-h0atsrnuel73fpebdoq43j0k4ijjk1ud.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.joker.license",
-            "certificate_hash": "f287732d6096be872df4de18047e4f1f6c40490a"
-          }
-        },
-        {
-          "client_id": "54782064747-125ke3jtdd5jlt642maeu2anin8ugcpa.apps.googleusercontent.com",
+          "client_id": "992329799436-rn7ld1hqbcpdid2b25a344kict0k7pjk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCw1tuMTM1WjoA6KLCt4hGkwNhLn5j5PAg"
+          "current_key": "AIzaSyAbb-1dk_cOcocgxGNKXWWmIvvCG9b0aBw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "54782064747-125ke3jtdd5jlt642maeu2anin8ugcpa.apps.googleusercontent.com",
+              "client_id": "992329799436-rn7ld1hqbcpdid2b25a344kict0k7pjk.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "992329799436-c9jhd1elmj8vb99sntn17htpp1vqp9hl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.joker.license"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992329799436:android:04a9ce53408b4e3b8b9b29",
+        "android_client_info": {
+          "package_name": "com.joker.license"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "992329799436-rn7ld1hqbcpdid2b25a344kict0k7pjk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbb-1dk_cOcocgxGNKXWWmIvvCG9b0aBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "992329799436-rn7ld1hqbcpdid2b25a344kict0k7pjk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "992329799436-c9jhd1elmj8vb99sntn17htpp1vqp9hl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.joker.license"
+              }
             }
           ]
         }

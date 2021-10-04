@@ -2,19 +2,19 @@
 <!--    <string name="app_name">Pokerdom</string>-->
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
-    <string name="fcm_message">FCM Message</string>
+    <string name="fcm_message" translatable="false">FCM Message</string>
 
-    <string name="downloading">Downloading...</string>
-    <string name="title_file_download">APK is downloading</string>
-    <string name="storage_access_required">Storage access is required to downloading the file.</string>
-    <string name="storage_permission_denied">Storage permission request was denied.</string>
+    <string name="downloading" translatable="false">Downloading...</string>
+    <string name="title_file_download" translatable="false">APK is downloading</string>
+    <string name="storage_access_required" translatable="false">Storage access is required to downloading the file.</string>
+    <string name="storage_permission_denied" translatable="false">Storage permission request was denied.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="no_connection_text_header">Нет сети</string>
     <string name="no_connection_text_body">Проверьте ваше интернет-соединение\nв настройках сети.</string>
-    <string name="joker_logo">Joker logo</string>
-    <string name="error_image_no_connection_for_joker">error image no connection for joker</string>
+    <string name="joker_logo" translatable="false">Joker logo</string>
+    <string name="error_image_no_connection_for_joker" translatable="false">error image no connection for joker</string>
     <string name="update_app_header">Обновите приложение</string>
     <string name="version_error_body">Ваше приложение устарело. Скачайте обновленную версию.</string>
     <string name="button_version_update_text">Обновить</string>

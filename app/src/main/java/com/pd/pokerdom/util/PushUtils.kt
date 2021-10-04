@@ -1,21 +1,22 @@
 package com.pd.pokerdom.util
 
 import android.annotation.SuppressLint
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.RemoteMessage
 import com.pd.pokerdom.R
 import com.pd.pokerdom.service.FCMService.Companion.KEY_FCM_LINK
+import com.pd.pokerdom.service.FCMService.Companion.KEY_FROM_NOTIFICATION
+import com.pd.pokerdom.ui.ApplicationState
 import com.pd.pokerdom.ui.main.MainActivity
+import com.pd.pokerdom.ui.start.StartActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -31,10 +32,16 @@ fun showNotification(
     webLink: String? = null
 ) {
 
-    val intent = Intent(context, MainActivity::class.java)
+    val intent = Intent(context, StartActivity::class.java)
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+    Log.d("FirebaseMessage", "website: $webLink")
     webLink.let {
-        intent.putExtra(KEY_FCM_LINK, webLink)
+        Log.d("FirebaseMessage", "State behaviour subject before: ${ApplicationState().getApplicationState().value}")
+        ApplicationState().fromNotification()
+        Log.d("FirebaseMessage", "State behaviour subject after: ${ApplicationState().getApplicationState().value}")
+        val link = webLink?.replace(" ", "")
+        intent.putExtra(KEY_FCM_LINK, link)
+        intent.putExtra(KEY_FROM_NOTIFICATION, true)
     }
 
     val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT)
