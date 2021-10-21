@@ -3,6 +3,7 @@ package com.pd.pokerdom.ui.start
 import android.Manifest
 import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
@@ -43,7 +44,6 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
     private var versionChecked: Boolean = false;
     private val prefs: SharedPrefsManager by inject()
     private val versionControl: VersionControl by viewModel()
-//    private val viewModel: StartViewModel by viewModel()
     private lateinit var downloadController: DownloadController
     private val navController: NavController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
     private var originSite: String? = null;
@@ -52,29 +52,30 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        Log.d("Observer", "onCreate")
+        ConnectivityReceiver.connectivityReceiverListener = this
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         val intent = intent.extras
         val originSite = intent?.getString(KEY_FCM_LINK)
         val isFromNotification = intent?.getBoolean(KEY_FROM_NOTIFICATION)
         if (isFromNotification != null && !isAppRunning()) {
             registerReceiver(ConnectivityReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
-            Log.d("isApplicationRunning", "app started at the first time from notification ${intent?.getBoolean(KEY_FROM_NOTIFICATION)}")
+            Log.d("isApplicationRunning", "app started at the first time from notification ${intent.getBoolean(KEY_FROM_NOTIFICATION)}")
             originSite.let {
                 this.originSite = it
                 this.fromNotification = true
             }
             openMain()
-        } else if(isAppRunning() && isFromNotification != null) {
-            Log.d("isApplicationRunning", "app started at the second time from notification ${intent?.getBoolean(KEY_FROM_NOTIFICATION)}")
+        } else if(isAppRunning() && isFromNotification != null && isFromNotification) {
+            Log.d("isApplicationRunning", "app started at the second time from notification ${intent.getBoolean(KEY_FROM_NOTIFICATION)}")
             originSite.let {
                 this.originSite = it
                 this.fromNotification = true
             }
             openMain()
-        } else if (isFromNotification == null) {
+        } else {
             Log.d("isApplicationRunning", "default ${intent?.getBoolean(KEY_FROM_NOTIFICATION)}")
-            registerReceiver(ConnectivityReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
-            checkAppVersion()
+            registerReceiver(ConnectivityReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         }
         Log.d("Mylog", "[StartActivity]")
 
@@ -93,7 +94,7 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
     override fun onResume() {
         super.onResume()
         Log.d("Observer", "Resume")
-        ConnectivityReceiver.connectivityReceiverListener = this
+
     }
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
@@ -102,58 +103,20 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
 
     private fun checkConnection(isConnected: Boolean) {
         Log.d("Observer", "State: $isConnected")
-        if (!isConnected) {
+        if (!isConnected){
             Log.d("Observer", "isConnected: $isConnected")
             ConnectionStateActivity.open(this)
-        } else {
-//            val int = intent.extras
-//            val fromNotification: Boolean = int?.getBoolean(KEY_FROM_NOTIFICATION) as Boolean
-            if (!versionChecked) {
-                versionChecked = true
-//                checkHostException()
-//                if (!fromNotification) {
-//                applicationState.onNext(true)
-//                applicationState.subscribe { state ->
-//                    Log.d("Observer", "KEY_FROM_NOTIFICATION: $state")
-//                    if (!state) {
-                        checkAppVersion()
-//                    } else {
-//                        val intent = intent.extras
-//                        val originSite = intent?.getString(KEY_FCM_LINK)
-//                        originSite.let {
-//                            this.originSite = it
-//                            this.fromNotification = state
-//                            openMain()
-//                        }
-//                        throw Error("originSite is null")
-//                    }
-//                }
-
-            } else {
-                openMain()
+        } else if (isConnected) {
+            if (!this.fromNotification) {
+                if (!versionChecked) {
+                    versionChecked = true
+                    checkAppVersion()
+                } else {
+                    openMain()
+                }
             }
-
-//            if (networkType()) {
-//                Toast.makeText(this, "You are online now.!!!" + "\n Connected to Wifi Network", Toast.LENGTH_LONG).show()
-//            } else {
-//                Toast.makeText(this, "You are online now.!!!" + "\n Connected to Cellular Network", Toast.LENGTH_LONG).show()
-//            }
         }
     }
-//
-//    private fun networkType(): Boolean {
-//        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-//        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-//        val isWifi: Boolean = activeNetwork?.type == ConnectivityManager.TYPE_WIFI
-//        return isWifi
-//    }
-
-
-//    private fun checkHostException() {
-//        viewModel.hostException.observe(this, Observer {
-//            toast(it)
-//        })
-//    }
     private fun checkNotification() {
         val bundle = intent.extras
         printListBundle(bundle)
@@ -177,44 +140,7 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
         } else {
             openMain()
         }
-//        if (isNotConnecting()) {
-//            ConnectionStateActivity.open(this)
-//            return
-//        }
-//        viewModel.getAppVersion()
-//        viewModel.appVersion.observe(this, { appVersion ->
-//            val serverVersionLimit = appVersion.versionLimit.toString()
-//            val serverVersion = appVersion.version.toString()
-//            originSite = appVersion.site.toString()
-//            Log.d("siteTestLink", "Link ${appVersion.site.toString()}")
-//            compareVersion(serverVersionLimit)
-            // checking on app version
-
-//        }
-//    )
-
-
-
-
-
-
-//        viewModel.openMain.observe(this, Observer {
-//            if (it) openMain()
-//        })
     }
-
-
-//    private fun compareVersion(versionLimit: String) {
-//        if (Version(versionLimit).isHigherThan(BuildConfig.VERSION_NAME)) {
-//            val bool = Version(versionLimit).isHigherThan(BuildConfig.VERSION_NAME)
-//            Log.d("MyLog", "[VERSION_NAME] --- $bool")
-//            return VersionActivityFragment.open(this)
-//        } else {
-//            val bool = Version(versionLimit).isHigherThan(BuildConfig.VERSION_NAME)
-//            Log.d("MyLog", "[VERSION_NAME] $bool $versionLimit")
-//            openMain()
-//        }
-//    }
 
     private fun openMain() {
         prefs.isFirstLunch = false;

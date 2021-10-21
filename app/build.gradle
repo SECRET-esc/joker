@@ -43,7 +43,6 @@ ext {
 }
 
 android {
-
     lintOptions {
         abortOnError false
     }
