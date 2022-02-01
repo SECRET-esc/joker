@@ -9,19 +9,22 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 ext {
     URL_WEBVIEW_DEV = '"https://develop.pokerdom.dev/"' // dev
-    URL_WEBVIEW_PROD_PD = '"https://android.g2slt.com/"' // prod_PD
+    URL_WEBVIEW_PROD_PD = '"https://android.vl7pd.com/"' // prod_PD
 //    URL_WEBVIEW_PROD_JOKER = '"https://joker.online/"' // prod_JOKER
-    URL_WEBVIEW_PROD_JOKER = '"https://joker.win/"' // prod_JOKER
+    URL_WEBVIEW_PROD_JOKER = '"https://joker.ua/"' // prod_JOKER
     URL_WEBVIEW_PROD_LIC = '"https://joker.ua/"' // joker-license prod
     // token
-    URL_HOST_TOKEN_DEV = '"https://s.playgames.casino"'
+    URL_HOST_TOKEN_DEV = '"https://s.dev2.btcasino.com"'
     URL_HOST_TOKEN_PROD_PD = '"https://s.playgames.casino"'
     URL_HOST_TOKEN_PROD_JOKER = '"https://s.backend-casino.info"'
-    URL_HOST_TOKEN_PROD_LIC= '"https://s.jlgames.info"'
+    URL_HOST_TOKEN_PROD_LIC= '"https://s.backend-casino.info"'
     //apk
-    URL_APK_PD = '"https://android.g2slt.com/play/tr/assets/pd.apk"'
-    URL_APK_JOKER = '"https://joker.win/play/tr/assets/joker.apk"'
+    URL_APK_PD = '"https://android.vl7pd.com/play/tr/assets/pd.apk"'
+    URL_APK_JOKER = '"https://joker.ua/play/tr/assets/joker.apk"'
     URL_APK_LIC='"https://joker.ua/play/tr/assets/jokerua.apk"'
+    URL_WEBVIEW_VERSION_FILE_PD = '"https://rd7pd.com/"'
+    URL_WEBVIEW_VERSION_FILE_JOKER = '"https://joker.ua/"'
+    URL_WEBVIEW_VERSION_FILE_LIC='"https://joker.ua/"'
     // objects keys for build variant
     // joker lic
     versionJokerUa = '"versionJokerUa"'
@@ -109,6 +112,7 @@ android {
             buildConfigField("String", "URL_WEBVIEW", URL_WEBVIEW_PROD_PD)
             buildConfigField("String", "URL_HOST_TOKEN", URL_HOST_TOKEN_PROD_PD)
             buildConfigField("String", "URL_APK", URL_APK_PD)
+            buildConfigField("String", "URL_WEBVIEW_VERSION_FILE", URL_WEBVIEW_VERSION_FILE_PD)
             buildConfigField("String", "VERSION_KEY", versionPd)
             buildConfigField("String", "VERSION_LIMIT_KEY", versionLimitPd)
             buildConfigField("String", "SITE_KEY", sitePd)
@@ -122,6 +126,7 @@ android {
             buildConfigField("String", "URL_WEBVIEW", URL_WEBVIEW_PROD_JOKER)
             buildConfigField("String", "URL_HOST_TOKEN", URL_HOST_TOKEN_PROD_JOKER)
             buildConfigField("String", "URL_APK", URL_APK_JOKER)
+            buildConfigField("String", "URL_WEBVIEW_VERSION_FILE", URL_WEBVIEW_VERSION_FILE_JOKER)
             buildConfigField("String", "VERSION_KEY", versionJoker)
             buildConfigField("String", "VERSION_LIMIT_KEY", versionLimitJoker)
             buildConfigField("String", "SITE_KEY", siteJoker)
@@ -135,6 +140,7 @@ android {
             buildConfigField("String", "URL_WEBVIEW", URL_WEBVIEW_PROD_LIC)
             buildConfigField("String", "URL_HOST_TOKEN", URL_HOST_TOKEN_PROD_LIC)
             buildConfigField("String", "URL_APK", URL_APK_LIC)
+            buildConfigField("String", "URL_WEBVIEW_VERSION_FILE", URL_WEBVIEW_VERSION_FILE_LIC)
             buildConfigField("String", "VERSION_KEY", versionJokerUa)
             buildConfigField("String", "VERSION_LIMIT_KEY", versionLimitJokerUa)
             buildConfigField("String", "SITE_KEY", siteJokerUa)
