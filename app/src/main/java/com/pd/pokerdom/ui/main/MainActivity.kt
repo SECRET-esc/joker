@@ -60,11 +60,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 Log.d("testFCMLINK", "onResume")
                 val response: Array<Any> = versionControl.getVersion()
 
-                val errorLimit: Boolean = response[0] as Boolean
+//                val errorLimit: Boolean = response[0] as Boolean
                 val originSite = response[1] as String
-                if (errorLimit) {
-                    return VersionActivityFragment.open(this)
-                }
+//                if (errorLimit) {
+//                    return VersionActivityFragment.open(this)
+//                }
 
                 if (originSite != this.originSite) {
                     this.setupGraph(originSite)

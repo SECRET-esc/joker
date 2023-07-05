@@ -11,20 +11,29 @@ ext {
     URL_WEBVIEW_DEV = '"https://develop.pokerdom.dev/"' // dev
     URL_WEBVIEW_PROD_PD = '"https://android.vl7pd.com/"' // prod_PD
 //    URL_WEBVIEW_PROD_JOKER = '"https://joker.online/"' // prod_JOKER
-    URL_WEBVIEW_PROD_JOKER = '"https://joker.ua/"' // prod_JOKER
-    URL_WEBVIEW_PROD_LIC = '"https://joker.ua/"' // joker-license prod
+    URL_WEBVIEW_PROD_JOKER = '"https://joker.land/"' // prod_JOKER
+    URL_WEBVIEW_PROD_LIC = '"https://joker.land/"' // joker-license prod
+    URL_WEBVIEW_PROD_ZAZA = '"https://zaza.com/"' // prod_ZAZA
     // token
     URL_HOST_TOKEN_DEV = '"https://s.dev2.btcasino.com"'
     URL_HOST_TOKEN_PROD_PD = '"https://s.playgames.casino"'
     URL_HOST_TOKEN_PROD_JOKER = '"https://s.backend-casino.info"'
     URL_HOST_TOKEN_PROD_LIC= '"https://s.backend-casino.info"'
+    URL_HOST_TOKEN_PROD_ZAZA = '"https://s.caplay.info"'
     //apk
     URL_APK_PD = '"https://android.vl7pd.com/play/tr/assets/pd.apk"'
-    URL_APK_JOKER = '"https://joker.ua/play/tr/assets/joker.apk"'
-    URL_APK_LIC='"https://joker.ua/play/tr/assets/jokerua.apk"'
+    URL_APK_JOKER = '"https://jokerua.com/play/tr/assets/joker.apk"'
+    URL_APK_LIC='"https://jokerua.com/play/tr/assets/jokerua.apk"'
+    URL_APK_ZAZA = '"https://zaza.com/play/tr/assets/zaza.apk"'
+
+    // version file
     URL_WEBVIEW_VERSION_FILE_PD = '"https://rd7pd.com/"'
-    URL_WEBVIEW_VERSION_FILE_JOKER = '"https://joker.ua/"'
-    URL_WEBVIEW_VERSION_FILE_LIC='"https://joker.ua/"'
+    URL_WEBVIEW_VERSION_FILE_JOKER = '"https://jokerua.com/"'
+    URL_WEBVIEW_VERSION_FILE_LIC='"https://jokerua.com/"'
+    URL_WEBVIEW_VERSION_FILE_ZAZA = '"https://zaza.com/"'
+
+
+
     // objects keys for build variant
     // joker lic
     versionJokerUa = '"versionJokerUa"'
@@ -41,7 +50,11 @@ ext {
     versionLimitPd= '"versionLimitPd"'
     sitePd = '"sitePd"'
     hashPd = '"hashPd"'
-
+    // zaza
+    versionZaza = '"versionZaza"'
+    versionLimitZaza = '"versionLimitZaza"'
+    siteZaza = '"siteZaza"'
+    hashZaza = '"hashZaza"'
 
 }
 
@@ -77,7 +90,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 2
-        versionName "1.2.0"
+        versionName "1.3.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -104,6 +117,9 @@ android {
             buildConfigField("String", "VERSION_LIMIT_KEY", versionLimitPd)
             buildConfigField("String", "SITE_KEY", sitePd)
             buildConfigField("String", "HASH_KEY", hashPd)
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
         }
         pd {
             dimension "version"
@@ -118,6 +134,9 @@ android {
             buildConfigField("String", "SITE_KEY", sitePd)
             buildConfigField("String", "HASH_KEY", hashPd)
             signingConfig signingConfigs.releasePD
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
         }
         joker {
             dimension "version"
@@ -132,11 +151,14 @@ android {
             buildConfigField("String", "SITE_KEY", siteJoker)
             buildConfigField("String", "HASH_KEY", hashJoker)
             signingConfig signingConfigs.releaseJoker
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
         }
-        joker_lic{
+        joker_lic {
             dimension "version"
             applicationId "com.joker.license"
-            resValue "string", "app_name", "Jokerua"
+            resValue "string", "app_name", "Joker"
             buildConfigField("String", "URL_WEBVIEW", URL_WEBVIEW_PROD_LIC)
             buildConfigField("String", "URL_HOST_TOKEN", URL_HOST_TOKEN_PROD_LIC)
             buildConfigField("String", "URL_APK", URL_APK_LIC)
@@ -146,6 +168,26 @@ android {
             buildConfigField("String", "SITE_KEY", siteJokerUa)
             buildConfigField("String", "HASH_KEY", hashJokerUa)
             signingConfig signingConfigs.releaseJoker
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
+        }
+        zaza_prod {
+            dimension "version"
+            applicationId "zaza.android"
+            resValue "string", "app_name", "Zaza"
+            buildConfigField("String", "URL_WEBVIEW", URL_WEBVIEW_PROD_ZAZA)
+            buildConfigField("String", "URL_HOST_TOKEN", URL_HOST_TOKEN_PROD_ZAZA)
+            buildConfigField("String", "URL_APK", URL_APK_ZAZA)
+            buildConfigField("String", "URL_WEBVIEW_VERSION_FILE", URL_WEBVIEW_VERSION_FILE_ZAZA)
+            buildConfigField("String", "VERSION_KEY", versionZaza)
+            buildConfigField("String", "VERSION_LIMIT_KEY", versionLimitZaza)
+            buildConfigField("String", "SITE_KEY", siteZaza)
+            buildConfigField("String", "HASH_KEY", hashZaza)
+            signingConfig signingConfigs.releaseJoker
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
         }
     }
 

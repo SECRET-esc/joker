@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "526466995095",
+    "project_id": "zaza-82626",
+    "storage_bucket": "zaza-82626.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526466995095:android:938f3cb0463575ef252ad2",
+        "android_client_info": {
+          "package_name": "zaza.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "526466995095-4tjnjo1tcm1jr3uq5ag7458iuf0o0qa3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsElzR2v3LVkRkY0BGNJx_fgxJKtT8Rhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "526466995095-4tjnjo1tcm1jr3uq5ag7458iuf0o0qa3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

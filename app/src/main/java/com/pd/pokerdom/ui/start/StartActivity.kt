@@ -14,9 +14,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.pd.pokerdom.BuildConfig
 import com.pd.pokerdom.R
+import com.pd.pokerdom.model.EventContext
+import com.pd.pokerdom.model.EventObj
+import com.pd.pokerdom.repository.EventRepository
 import com.pd.pokerdom.service.FCMService
+import com.pd.pokerdom.service.FCMService.Companion.DATA_KEY
 import com.pd.pokerdom.service.FCMService.Companion.KEY_FCM_LINK
 import com.pd.pokerdom.service.FCMService.Companion.KEY_FROM_NOTIFICATION
 import com.pd.pokerdom.storage.SharedPrefsManager
@@ -31,6 +36,9 @@ import com.pd.pokerdom.ui.version.VersionActivityFragment
 import com.pd.pokerdom.ui.version.VersionControl
 import com.pd.pokerdom.util.*
 import kotlinx.android.synthetic.main.activity_start.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.json.JSONObject
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -44,6 +52,8 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
     private var versionChecked: Boolean = false;
     private val prefs: SharedPrefsManager by inject()
     private val versionControl: VersionControl by viewModel()
+    private val repository: EventRepository by inject()
+
     private lateinit var downloadController: DownloadController
     private val navController: NavController by lazy { Navigation.findNavController(this, R.id.nav_host_fragment) }
     private var originSite: String? = null;
@@ -77,8 +87,20 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
             Log.d("isApplicationRunning", "default ${intent?.getBoolean(KEY_FROM_NOTIFICATION)}")
             registerReceiver(ConnectivityReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         }
+        if (isFromNotification == true) {
+                val data = Gson().fromJson(intent.getString(DATA_KEY), EventObj::class.java)
+                GlobalScope.launch {
+                    sendRequest(data)
+                }
+        }
         Log.d("Mylog", "[StartActivity]")
 
+    }
+
+    private suspend fun sendRequest(obj: EventObj) {
+        repository.sendEvent(obj).let {
+            Log.d("Mylog", "had sent event")
+        }
     }
 
     private fun isAppRunning() : Boolean {
@@ -135,11 +157,11 @@ class StartActivity : AppCompatActivity(R.layout.activity_start), IUpdateDialog,
 
         val errorLimit: Boolean = response[0] as Boolean
         originSite = response[1] as String
-        if (errorLimit) {
-            return VersionActivityFragment.open(this)
-        } else {
+//        if (errorLimit) {
+//            return VersionActivityFragment.open(this)
+//        } else {
             openMain()
-        }
+//        }
     }
 
     private fun openMain() {

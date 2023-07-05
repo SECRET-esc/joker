@@ -1,7 +1,7 @@
 package com.pd.pokerdom.api
 
-import com.pd.pokerdom.BuildConfig.URL_HOST_TOKEN
 import com.pd.pokerdom.model.AppVersion
+import com.pd.pokerdom.model.EventObj
 import com.pd.pokerdom.model.TokenObj
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -16,4 +16,6 @@ interface ApiService {
     @POST
     suspend fun sendToken(@Body tokenObj: TokenObj, @Url url: String)
 
+    @POST
+    suspend fun sendEvent(@Body eventObj: EventObj, @Url url: String)
 }

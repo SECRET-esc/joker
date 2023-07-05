@@ -16,35 +16,40 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/full_logo"
+        app:srcCompat="@drawable/ic_launcher"
         android:contentDescription="@string/joker_logo" />
 
     <ImageView
         android:id="@+id/versionErr"
-        android:layout_width="365dp"
-        android:layout_height="315dp"
+        app:layout_constraintWidth_percent=".9"
+        app:layout_constraintWidth_default="percent"
+
+        app:layout_constraintHeight_percent=".4"
+        app:layout_constraintHeight_default="percent"
         android:layout_marginTop="132dp"
         android:contentDescription="@string/error_image_no_connection_for_joker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.347"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/error_version" />
+        app:srcCompat="@drawable/error_version"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        />
 
     <TextView
         android:id="@+id/no_connection_header"
         android:layout_width="355dp"
         android:layout_height="35dp"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/bold_font"
         android:text="@string/update_app_header"
         android:textAlignment="center"
         android:textColor="@color/textColor"
         android:textSize="23sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/versionErr"
+        app:layout_constraintTop_toBottomOf="@+id/versionErr"
         tools:targetApi="p" />
 
     <TextView

@@ -11,7 +11,11 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.RemoteMessage
+import com.google.gson.Gson
 import com.pd.pokerdom.R
+import com.pd.pokerdom.model.EventContext
+import com.pd.pokerdom.model.EventObj
+import com.pd.pokerdom.service.FCMService.Companion.DATA_KEY
 import com.pd.pokerdom.service.FCMService.Companion.KEY_FCM_LINK
 import com.pd.pokerdom.service.FCMService.Companion.KEY_FROM_NOTIFICATION
 import com.pd.pokerdom.ui.ApplicationState
@@ -20,6 +24,7 @@ import com.pd.pokerdom.ui.start.StartActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import java.io.IOException
 import java.net.URL
 
@@ -29,11 +34,13 @@ fun showNotification(
     title: String?,
     body: String?,
     imageLink: String? = null,
-    webLink: String? = null
+    webLink: String? = null,
+    data: Map<String, String>,
 ) {
 
     val intent = Intent(context, StartActivity::class.java)
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+    intent.putExtra(DATA_KEY, Gson().toJson(makeClass(type = data["eventFrom"], subject = data["title"], userId = data["userId"], defaultLink = data["link"], userAgent = "")))
     Log.d("FirebaseMessage", "website: $webLink")
     webLink.let {
         Log.d("FirebaseMessage", "State behaviour subject before: ${ApplicationState().getApplicationState().value}")
@@ -89,4 +96,8 @@ fun applyImageUrl(imageUrl: String?): Bitmap? = runBlocking {
             null
         }
     }?.let { bitmap -> return@let bitmap }
+}
+
+fun makeClass(type: String?, subject: String?, userId: String?, defaultLink: String?, userAgent: String?): EventObj {
+    return EventObj(type = type!!, eventContext = EventContext(subject = subject!!, userId = userId!!, defaultLink = defaultLink!!, action = "open", userAgent = userAgent!!))
 }
